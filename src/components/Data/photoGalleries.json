@@ -1,0 +1,352 @@
+[
+  {
+    "cottageId":0,
+    "photos":[
+      {
+        "id":0,
+        "src":"/img/cottages/cottage0/1.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":1,
+        "src":"/img/cottages/cottage0/2.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":2,
+        "src":"/img/cottages/cottage0/3.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":3,
+        "src":"/img/cottages/cottage0/4.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":4,
+        "src":"/img/cottages/cottage0/5.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":5,
+        "src":"/img/cottages/cottage0/6.jpg",
+        "alt":"kuva mökistä"
+      }
+    ]
+  },
+  {
+    "cottageId":1,
+    "photos":[
+      {
+        "id":0,
+        "src":"/img/cottages/cottage1/1.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":1,
+        "src":"/img/cottages/cottage0/2.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":2,
+        "src":"/img/cottages/cottage0/3.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":3,
+        "src":"/img/cottages/cottage0/4.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":4,
+        "src":"/img/cottages/cottage0/5.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":5,
+        "src":"/img/cottages/cottage0/6.jpg",
+        "alt":"kuva mökistä"
+      }
+    ]
+  },
+  {
+    "cottageId":2,
+    "photos":[
+      {
+        "id":0,
+        "src":"/img/cottages/cottage2/1.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":1,
+        "src":"/img/cottages/cottage0/2.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":2,
+        "src":"/img/cottages/cottage0/3.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":3,
+        "src":"/img/cottages/cottage0/4.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":4,
+        "src":"/img/cottages/cottage0/5.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":5,
+        "src":"/img/cottages/cottage0/6.jpg",
+        "alt":"kuva mökistä"
+      }
+    ]
+  },
+  {
+    "cottageId":3,
+    "photos":[
+      {
+        "id":0,
+        "src":"/img/cottages/cottage3/1.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":1,
+        "src":"/img/cottages/cottage0/2.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":2,
+        "src":"/img/cottages/cottage0/3.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":3,
+        "src":"/img/cottages/cottage0/4.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":4,
+        "src":"/img/cottages/cottage0/5.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":5,
+        "src":"/img/cottages/cottage0/6.jpg",
+        "alt":"kuva mökistä"
+      }
+    ]
+  },
+  {
+    "cottageId":4,
+    "photos":[
+      {
+        "id":0,
+        "src":"/img/cottages/cottage4/1.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":1,
+        "src":"/img/cottages/cottage0/2.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":2,
+        "src":"/img/cottages/cottage0/3.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":3,
+        "src":"/img/cottages/cottage0/4.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":4,
+        "src":"/img/cottages/cottage0/5.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":5,
+        "src":"/img/cottages/cottage0/6.jpg",
+        "alt":"kuva mökistä"
+      }
+    ]
+  },
+  {
+    "cottageId":5,
+    "photos":[
+      {
+        "id":0,
+        "src":"/img/cottages/cottage5/1.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":1,
+        "src":"/img/cottages/cottage0/2.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":2,
+        "src":"/img/cottages/cottage0/3.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":3,
+        "src":"/img/cottages/cottage0/4.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":4,
+        "src":"/img/cottages/cottage0/5.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":5,
+        "src":"/img/cottages/cottage0/6.jpg",
+        "alt":"kuva mökistä"
+      }
+    ]
+  },
+  {
+    "cottageId":6,
+    "photos":[
+      {
+        "id":0,
+        "src":"/img/cottages/cottage6/1.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":1,
+        "src":"/img/cottages/cottage0/2.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":2,
+        "src":"/img/cottages/cottage0/3.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":3,
+        "src":"/img/cottages/cottage0/4.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":4,
+        "src":"/img/cottages/cottage0/5.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":5,
+        "src":"/img/cottages/cottage0/6.jpg",
+        "alt":"kuva mökistä"
+      }
+    ]
+  },
+  {
+    "cottageId":7,
+    "photos":[
+      {
+        "id":0,
+        "src":"/img/cottages/cottage7/1.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":1,
+        "src":"/img/cottages/cottage0/2.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":2,
+        "src":"/img/cottages/cottage0/3.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":3,
+        "src":"/img/cottages/cottage0/4.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":4,
+        "src":"/img/cottages/cottage0/5.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":5,
+        "src":"/img/cottages/cottage0/6.jpg",
+        "alt":"kuva mökistä"
+      }
+    ]
+  },
+  {
+    "cottageId":8,
+    "photos":[
+      {
+        "id":0,
+        "src":"/img/cottages/cottage8/1.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":1,
+        "src":"/img/cottages/cottage0/2.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":2,
+        "src":"/img/cottages/cottage0/3.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":3,
+        "src":"/img/cottages/cottage0/4.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":4,
+        "src":"/img/cottages/cottage0/5.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":5,
+        "src":"/img/cottages/cottage0/6.jpg",
+        "alt":"kuva mökistä"
+      }
+    ]
+  },
+  {
+    "cottageId":9,
+    "photos":[
+      {
+        "id":0,
+        "src":"/img/cottages/cottage9/1.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":1,
+        "src":"/img/cottages/cottage0/2.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":2,
+        "src":"/img/cottages/cottage0/3.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":3,
+        "src":"/img/cottages/cottage0/4.jpg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":4,
+        "src":"/img/cottages/cottage0/5.jpeg",
+        "alt":"kuva mökistä"
+      },
+      {
+        "id":5,
+        "src":"/img/cottages/cottage0/6.jpg",
+        "alt":"kuva mökistä"
+      }
+    ]
+  }
+]
