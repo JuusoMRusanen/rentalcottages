@@ -45,8 +45,8 @@
     ]
   },
   "engines": {
-    "node": "18.2.0",
-    "npm": "8.18.0"
+    "node": "18.9.0",
+    "npm": "8.19.1"
   },
   "proxy": "http://localhost:3001"
 }
