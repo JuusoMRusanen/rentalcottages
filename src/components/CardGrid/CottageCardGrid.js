@@ -4,6 +4,9 @@ import { Grid, Box, CircularProgress } from '@mui/material';
 import CottagesPagination from './CottagesPagination';
 import CottageCard from './CottageCard';
 import { useParams } from 'react-router-dom';
+import CottageDataService from '../../services/cottage.service';
+import ReviewDataService from '../../services/review.service';
+import PhotoDataService from '../../services/photo.service';
 
 export default function CottageCardGrid() {
 
@@ -36,19 +39,17 @@ export default function CottageCardGrid() {
     const startRow = endRow - cottagesPerPage;
 
     // Fetch Photos for a page of cottages
-    const fetchUserRatings = async () => {
-      
-      const response = await fetch(`/listUserRatings`)
-      const body = await response.json();
-
-      if (response.status !== 200) {
-        throw Error(body.message);
-      }
-      return body;
+    const getAllUserRatings = async () => {
+      ReviewDataService.getAll()
+      .then(response => {
+        setAllUserRatings(response.data);
+      })
     }
 
-    // Fetch Photos for a page of cottages
-    const fetchPhotos = async (cottages) => {
+    // Get Photos for a page of cottages
+    const getPhotos = async (cottages) => {
+
+      if(cottages){
 
       let cottageIDs = "";
 
@@ -56,52 +57,25 @@ export default function CottageCardGrid() {
       cottages.forEach( (cottage, index) => { 
         
         if (index !== cottages.length - 1) {
-          cottageIDs += "cottageId=" + cottage[0].cottageId + "&";
+          cottageIDs += "cottageId=" + cottage.id + "&";
         } else {
-          cottageIDs += "cottageId=" + cottage[0].cottageId;
+          cottageIDs += "cottageId=" + cottage.id;
         }
       });
-      
-      const response = await fetch(`/getPhotos/url?${ cottageIDs }`)
-      const body = await response.json();
 
-      if (response.status !== 200) {
-        throw Error(body.message);
+      PhotoDataService.getAll(cottageIDs)
+      .then(response => {
+        setPhotos(response);
+      });
       }
-      return body;
-    }
-
-    // Fetch all cottages
-    const fetchAllCottages = async () => {
-      const response = await fetch(`/listCottages`);
-      const body = await response.json();
-
-      if (response.status !== 200) {
-        throw Error(body.message) 
-      }
-      
-      return body;
-    };
-
-    // Get all user ratings
-    const getAllUserRatings = () => {
-      fetchUserRatings()
-        .then(res => setAllUserRatings( {userRatings: res.userRatings}.userRatings ))
-        .catch(err => console.log(err));
-    }
-
-    // Get photos for a page of cottages
-    const getPhotos = (cottages) => {
-      if(cottages){fetchPhotos(cottages)
-        .then(res => setPhotos( {photos: res.photos}.photos ))
-        .catch(err => console.log(err))}
     }
 
     // Get all cottages
-    const getAllCottages = () => {
-      fetchAllCottages()
-        .then(res => setAllCottages( {cottages: res.cottages}.cottages ))
-        .catch(err => console.log(err));
+    const getAllCottages = async () => {
+      CottageDataService.getAll()
+      .then(response => {
+        setAllCottages(response.data);
+      })
     }
       
     // If cottages haven't been fetched yet
