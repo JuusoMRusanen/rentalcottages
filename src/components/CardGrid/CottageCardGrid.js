@@ -34,106 +34,118 @@ export default function CottageCardGrid() {
 
   React.useEffect(() => {
 
-    // Calculate index of first and last cottage
-    const endRow = currentPage * cottagesPerPage;
-    const startRow = endRow - cottagesPerPage;
+    const timer = setTimeout(() => {
 
-    // Fetch Photos for a page of cottages
-    const getAllUserRatings = async () => {
-      ReviewDataService.getAll()
-      .then(response => {
-        setAllUserRatings(response.data);
-      })
-    }
+      // Calculate index of first and last cottage
+      const endRow = currentPage * cottagesPerPage;
+      const startRow = endRow - cottagesPerPage;
 
-    // Get Photos for a page of cottages
-    const getPhotos = async (cottages) => {
+      // Fetch Photos for a page of cottages
+      const getAllUserRatings = async () => {
+        ReviewDataService.getAll()
+        .then(response => {
+          setAllUserRatings(response.data);
+        })
+      }
 
-      if(cottages){
+      // Get Photos for a page of cottages
+      const getPhotos = async (cottages) => {
 
-      let cottageIDs = "";
+        if(cottages){
 
-      // Get index of each cottage and form a query string
-      cottages.forEach( (cottage, index) => { 
-        
-        if (index !== cottages.length - 1) {
-          cottageIDs += "cottageId=" + cottage.id + "&";
-        } else {
-          cottageIDs += "cottageId=" + cottage.id;
+        console.log("Getting photos...");
+
+        let cottageIDs = "";
+
+        // Get index of each cottage and form a query string
+        cottages.forEach( (cottage, index) => { 
+          
+          if (index !== cottages.length - 1) {
+            cottageIDs += "cottageId=" + cottage.id + "&";
+          } else {
+            cottageIDs += "cottageId=" + cottage.id;
+          }
+        });
+
+        if (cottageIDs.length > 0) {
+          PhotoDataService.getAll(cottageIDs)
+          .then(response => {
+            setPhotos(response.data);
+            console.log(response.data);
+          });
+          }
         }
-      });
-
-      PhotoDataService.getAll(cottageIDs)
-      .then(response => {
-        setPhotos(response);
-      });
       }
-    }
 
-    // Get all cottages
-    const getAllCottages = async () => {
-      CottageDataService.getAll()
-      .then(response => {
-        setAllCottages(response.data);
-      })
-    }
-      
-    // If cottages haven't been fetched yet
-    if (allCottages.length === 0) {
-      getAllCottages();
-    }
-
-    // If user ratings haven't been fetched yet
-    if (allUserRatings.length === 0) {
-      getAllUserRatings();
-    }
-
-    if (params.cityId) {
-      setCityId(params.cityId)
-    } else {
-      setCityId(null)
-    }
-
-    if (params.regionId) {
-      setRegionId(params.regionId)
-    } else {
-      setRegionId(null)
-    }
-
-    // If page hasn't loaded yet and all cottages have been fetched
-    if (allCottages.length > 0 && allUserRatings.length > 0 && loading) {
-      
-      let cottagesArray = [];
-
-      // Sort cottages by city or region if an ID is specified
-      if (cityId) {      
-        allCottages.forEach((cottage) => {
-          if (cottage[0].cityId === Number(cityId)) {
-            
-            cottagesArray.push(cottage)
-          } 
+      // Get all cottages
+      const getAllCottages = async () => {
+        CottageDataService.getAll()
+        .then(response => {
+          setAllCottages(response.data);
         })
-        setAllCottages(cottagesArray)
       }
-      if (regionId) {
-        allCottages.forEach((cottage) => {
-          if (cottage[0].regionId === regionId) {
-            cottagesArray.push(cottage)
-          } 
-        })
-        setAllCottages(cottagesArray)
+        
+      // If cottages haven't been fetched yet
+      if (allCottages.length === 0) {
+        getAllCottages();
       }
 
-      let slicedCottages = allCottages.slice(startRow, endRow); // Slice all cottages to a page of cottages
+      // If user ratings haven't been fetched yet
+      if (allUserRatings.length === 0) {
+        getAllUserRatings();
+      }
 
-      setPageCottages(slicedCottages) // Set page of cottages
+      if (params.cityId) {
+        setCityId(params.cityId)
+      } else {
+        setCityId(null)
+      }
 
-      getPhotos(slicedCottages); // Get photos
-    }
+      if (params.regionId) {
+        setRegionId(params.regionId)
+      } else {
+        setRegionId(null)
+      }
 
-    if (photos.length > 0 && pageCottages.length > 0) {
-      setLoading(false)
-    }
+      // If page hasn't loaded yet and all cottages have been fetched
+      if (allCottages.length > 0 && allUserRatings.length > 0 && loading) {
+        
+        let cottagesArray = [];
+
+        // Sort cottages by city or region if an ID is specified
+        if (cityId) {      
+          allCottages.forEach((cottage) => {
+            if (cottage[0].cityId === Number(cityId)) {
+              
+              cottagesArray.push(cottage)
+            } 
+          })
+          setAllCottages(cottagesArray)
+        }
+        if (regionId) {
+          allCottages.forEach((cottage) => {
+            if (cottage[0].regionId === regionId) {
+              cottagesArray.push(cottage)
+            } 
+          })
+          setAllCottages(cottagesArray)
+        }
+
+        let slicedCottages = allCottages.slice(startRow, endRow); // Slice all cottages to a page of cottages
+
+        setPageCottages(slicedCottages) // Set page of cottages
+
+        if (photos.length <= 0) {
+          getPhotos(slicedCottages); // Get photos
+        }
+      }
+
+      if (photos.length > 0 && pageCottages.length > 0) {
+        setLoading(false)
+      } 
+
+    }, 500);
+    return () => clearTimeout(timer);
     
     },[ pageCottages, currentPage, allCottages, photos, loading, cottagesPerPage, allUserRatings, params.cityId, params.regionId, cityId, regionId ])
 
@@ -169,14 +181,14 @@ export default function CottageCardGrid() {
           let countOfRatings = 0;
           let rating = 0;
 
-          photos.forEach( photo => { 
-            if ( photo.cottageId === cottage[0].cottageId ) {
+          photos.forEach( photo => {
+            if ( photo.cottageId === cottage.cottageId ) {
               photosArray.push(photo);
             }
           });
 
           allUserRatings.forEach( userRating => { 
-            if ( userRating.cottageID === cottage[0].cottageId ) {
+            if ( userRating.cottageID === cottage.cottageId ) {
               sumOfRatings += userRating.rating;
               countOfRatings++;
             }
