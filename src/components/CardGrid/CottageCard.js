@@ -7,7 +7,7 @@ import CottageInformationList from '../Cottage/CottageInformationList';
 
 export default function CottageCard({cottageData, photosData, rating, countOfRatings}) {
 
-  const cottage = cottageData[0];
+  const cottage = cottageData;
 
   return (
     <Card 
