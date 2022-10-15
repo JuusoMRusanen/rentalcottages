@@ -19,8 +19,8 @@ export default function CottageCardGrid() {
 
   const [allUserRatings, setAllUserRatings] = useState([]);
   const [allCottages, setAllCottages] = useState([]);
+  const [allPhotos, setAllPhotos] = useState([]);
   const [pageCottages, setPageCottages] = useState([]);
-  const [photos, setPhotos] = useState([]);
 
   const [cityId, setCityId] = useState(null);
   const [regionId, setRegionId] = useState(null);
@@ -40,7 +40,7 @@ export default function CottageCardGrid() {
       const endRow = currentPage * cottagesPerPage;
       const startRow = endRow - cottagesPerPage;
 
-      // Fetch Photos for a page of cottages
+      // Fetch all reviews
       const getAllUserRatings = async () => {
         ReviewDataService.getAll()
         .then(response => {
@@ -48,33 +48,12 @@ export default function CottageCardGrid() {
         })
       }
 
-      // Get Photos for a page of cottages
-      const getPhotos = async (cottages) => {
-
-        if(cottages){
-
-        console.log("Getting photos...");
-
-        let cottageIDs = "";
-
-        // Get index of each cottage and form a query string
-        cottages.forEach( (cottage, index) => { 
-          
-          if (index !== cottages.length - 1) {
-            cottageIDs += "cottageId=" + cottage.id + "&";
-          } else {
-            cottageIDs += "cottageId=" + cottage.id;
-          }
-        });
-
-        if (cottageIDs.length > 0) {
-          PhotoDataService.getAll(cottageIDs)
-          .then(response => {
-            setPhotos(response.data);
-            console.log(response.data);
-          });
-          }
-        }
+      // Fetch all Photos
+      const getAllPhotos = async () => {
+        PhotoDataService.getAll()
+        .then(response => {
+          setAllPhotos(response.data);
+        })
       }
 
       // Get all cottages
@@ -135,19 +114,19 @@ export default function CottageCardGrid() {
 
         setPageCottages(slicedCottages) // Set page of cottages
 
-        if (photos.length <= 0) {
-          getPhotos(slicedCottages); // Get photos
+        if (allPhotos.length <= 0) {
+          getAllPhotos()
         }
       }
 
-      if (photos.length > 0 && pageCottages.length > 0) {
+      if (allPhotos.length > 0 && pageCottages.length > 0) {
         setLoading(false)
       } 
 
     }, 500);
     return () => clearTimeout(timer);
     
-    },[ pageCottages, currentPage, allCottages, photos, loading, cottagesPerPage, allUserRatings, params.cityId, params.regionId, cityId, regionId ])
+    },[ pageCottages, currentPage, allCottages, allPhotos, loading, cottagesPerPage, allUserRatings, params.cityId, params.regionId, cityId, regionId ])
 
   return (
     <>
@@ -181,8 +160,9 @@ export default function CottageCardGrid() {
           let countOfRatings = 0;
           let rating = 0;
 
-          photos.forEach( photo => {
+          allPhotos.forEach( photo => {
             if ( photo.cottageId === cottage.cottageId ) {
+              //console.log("yeppee");
               photosArray.push(photo);
             }
           });
