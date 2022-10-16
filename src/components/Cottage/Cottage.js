@@ -6,7 +6,8 @@ import PhotoCarousel from '../PhotoCarousel';
 import DateRangePickerCalendar from '../DatePicker/DateRangePickerCalendar';
 import CottageInformationList from './CottageInformationList';
 import Reviews from './Reviews';
-import CottageDataService from '../../services/cottage.service.js';
+import CottageDataService from '../../services/cottage.service';
+import ReviewDataService from '../../services/review.service';
 
 export default function Cottage() {
 
@@ -27,53 +28,44 @@ export default function Cottage() {
   const [gotUserRatings, setGotUserRatings] = useState(false);
   const [cottage, setCottage] = useState(null);
   const [photos, setPhotos] = useState([]);
-  const [userRatings, setUserRatings] = useState([]);
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-
-    // Fetch user ratings data
-    const fetchUserRatings = async () => {
-      const response = await fetch(`/getUserRatings/${params.id}`);
-      const body = await response.json();
-  
-      if (response.status !== 200) {
-        throw Error(body.message) 
-      }
-      return body;
-    };
 
     // Set data
     if (data) {
       try {
         setCottage(data.cottage[0])
         setPhotos(data.photos)
-        //setUserRatings(data.userRatings)
+        //setReviews(data.reviews)
       } catch (error) {}
     }
 
     // Data fetch
     if ( !gotCottage ) {
-      CottageDataService.get(params.id).then(res => setData(res.data, res.error))
+      CottageDataService.get(params.id)
+      .then(res => setData(res.data, res.error))
+      .catch(err => console.log(err));
       
       setGotCottage(true);
     }
 
     if ( !gotUserRatings ) {
-      fetchUserRatings()
-      .then(res => setUserRatings({userRatings : res.userRatings}.userRatings) )
+      ReviewDataService.getAllById(params.id)
+      .then(res => setReviews(res.data))
       .catch(err => console.log(err));
 
       setGotUserRatings(true);
     }
 
     // Calculate overall rating of cottage and get count of ratings
-    if (userRatings) {
+    if (reviews) {
 
       let sumOfRatings = 0;
       let countOfRatings = 0;
       let rating = 0;
 
-      userRatings.forEach((userRating) => {
+      reviews.forEach((userRating) => {
         if ( userRating.cottageID === cottage.cottageId ) {
           sumOfRatings += userRating.rating;
           countOfRatings++;
@@ -86,7 +78,7 @@ export default function Cottage() {
       setCountOfRatings(countOfRatings)
     }
 
-  }, [ gotCottage, params, cottage, photos, data, userRatings, rating, countOfRatings, gotUserRatings ]);
+  }, [ gotCottage, params, cottage, photos, data, reviews, rating, countOfRatings, gotUserRatings ]);
 
   return (
     <>
@@ -205,7 +197,7 @@ export default function Cottage() {
           </Typography>
         </Divider>
         
-        {cottage && userRatings // CHECKING IF CONTENT EXISTS
+        {cottage && reviews // CHECKING IF CONTENT EXISTS
         ?
         <>
         <StarRating rating={rating} countOfRatings={countOfRatings} showCountOfRatings={true} />
@@ -279,7 +271,7 @@ export default function Cottage() {
           height:"auto" 
         }}
         >
-        <Reviews userReviews={userRatings} />
+        <Reviews userReviews={reviews} />
       </Grid>
     </Grid>
     </>

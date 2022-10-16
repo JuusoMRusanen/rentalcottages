@@ -1,6 +1,10 @@
 import http from "../http-common";
 
 class ReviewDataService {
+  getAllById(id) {
+    return http.get(`/reviews/${id}`);
+  }
+
   getAll() {
     return http.get("/reviews");
   }
