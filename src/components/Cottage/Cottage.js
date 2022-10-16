@@ -6,6 +6,7 @@ import PhotoCarousel from '../PhotoCarousel';
 import DateRangePickerCalendar from '../DatePicker/DateRangePickerCalendar';
 import CottageInformationList from './CottageInformationList';
 import Reviews from './Reviews';
+import CottageDataService from '../../services/cottage.service.js';
 
 export default function Cottage() {
 
@@ -30,17 +31,6 @@ export default function Cottage() {
 
   useEffect(() => {
 
-    // Fetch cottage data
-    const fetchCottage = async () => {
-      const response = await fetch(`/getCottage/${params.id}`);
-      const body = await response.json();
-  
-      if (response.status !== 200) {
-        throw Error(body.message) 
-      }
-      return body;
-    };
-
     // Fetch user ratings data
     const fetchUserRatings = async () => {
       const response = await fetch(`/getUserRatings/${params.id}`);
@@ -63,10 +53,8 @@ export default function Cottage() {
 
     // Data fetch
     if ( !gotCottage ) {
-      fetchCottage()
-      .then(res => setData({cottage: res.cottage, photos: res.photos, error: res.error}) )
-      .catch(err => console.log(err));
-
+      CottageDataService.get(params.id).then(res => setData(res.data, res.error))
+      
       setGotCottage(true);
     }
 
