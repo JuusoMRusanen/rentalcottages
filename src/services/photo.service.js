@@ -5,6 +5,10 @@ class PhotoDataService {
     return http.get(`/photos`);
   }
 
+  getAllByCottageId(id) {
+    return http.get(`/photos/${id}`);
+  }
+
   get(id) {
     return http.get(`/photos/${id}`);
   }

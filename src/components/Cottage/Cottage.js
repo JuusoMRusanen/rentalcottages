@@ -8,6 +8,7 @@ import CottageInformationList from './CottageInformationList';
 import Reviews from './Reviews';
 import CottageDataService from '../../services/cottage.service';
 import ReviewDataService from '../../services/review.service';
+import PhotoDataService from '../../services/photo.service';
 
 export default function Cottage() {
 
@@ -25,7 +26,8 @@ export default function Cottage() {
   // Data fetch
   const [data, setData] = useState([]);
   const [gotCottage, setGotCottage] = useState(false);
-  const [gotUserRatings, setGotUserRatings] = useState(false);
+  const [gotReviews, setGotReviews] = useState(false);
+  const [gotPhotos, setGotPhotos] = useState(false);
   const [cottage, setCottage] = useState(null);
   const [photos, setPhotos] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -36,8 +38,6 @@ export default function Cottage() {
     if (data) {
       try {
         setCottage(data.cottage[0])
-        setPhotos(data.photos)
-        //setReviews(data.reviews)
       } catch (error) {}
     }
 
@@ -50,12 +50,20 @@ export default function Cottage() {
       setGotCottage(true);
     }
 
-    if ( !gotUserRatings ) {
+    if ( !gotPhotos ) {
+      PhotoDataService.getAllByCottageId(params.id)
+      .then(res => setPhotos(res.data))
+      .catch(err => console.log(err));
+
+      setGotPhotos(true);
+    }
+
+    if ( !gotReviews ) {
       ReviewDataService.getAllById(params.id)
       .then(res => setReviews(res.data))
       .catch(err => console.log(err));
 
-      setGotUserRatings(true);
+      setGotReviews(true);
     }
 
     // Calculate overall rating of cottage and get count of ratings
@@ -65,9 +73,9 @@ export default function Cottage() {
       let countOfRatings = 0;
       let rating = 0;
 
-      reviews.forEach((userRating) => {
-        if ( userRating.cottageID === cottage.cottageId ) {
-          sumOfRatings += userRating.rating;
+      reviews.forEach((review) => {
+        if ( review.cottageID === cottage.cottageId ) {
+          sumOfRatings += review.rating;
           countOfRatings++;
         }
       })
@@ -78,7 +86,7 @@ export default function Cottage() {
       setCountOfRatings(countOfRatings)
     }
 
-  }, [ gotCottage, params, cottage, photos, data, reviews, rating, countOfRatings, gotUserRatings ]);
+  }, [ gotCottage, params, cottage, photos, data, reviews, rating, countOfRatings, gotReviews, gotPhotos ]);
 
   return (
     <>
