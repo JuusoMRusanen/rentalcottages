@@ -50,6 +50,7 @@ export default function Reviews({ userReviews }) {
           {index !== userReviews.length - 1
           ?
           <Divider 
+            key={index} 
             sx={{
               p:'20px',
             }}
