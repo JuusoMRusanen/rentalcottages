@@ -28,70 +28,70 @@ export default function ReservationSummary() {
     >
     <Typography variant="h2" mb={"50px"}>Varaus onnistui!</Typography>
 
-    <Paper>
-    <Typography variant="h4" p={"20px"} >Varauksen tiedot:</Typography>
-    <Grid container
+    <Paper
       sx={{
-        textAlign:"left",
         mb:"30px",
       }}
-      >
+    >
+    <Typography variant="h4" p={"20px"} >Varauksen tiedot:</Typography>
+    
       {location.state.formValues 
-      ?
-      location.state.formValues.map((formValue, idx) => {
-        return(
-          <>
-          <Grid item 
-            xs={6} 
-            key={idx}
-            sx={{
-              pt:"5px",
-              pb:"5px",
-            }}
-            >
-
-            <Typography
-              variant="body1"
+        ? location.state.formValues.map((formValue, idx) => {
+          return(
+            <Grid container
               sx={{
-                pt:"10px",
-                pb:"10px",
-                pl:"5px",
-                fontWeight:"bold",
+                textAlign:"left",
               }}
-            >{valueNames[idx]}: </Typography>
-            
-          </Grid>
+              key={`ListItem${idx}`}
+              >
+              <Grid item
+                xs={6} 
+                sx={{
+                  pt:"5px",
+                  pb:"5px",
+                }}                
+                >
 
-          <Grid item 
-            xs={6} 
-            key={`${idx}${idx}`}
-            sx={{
-              pt:"5px",
-              pb:"5px",
-            }}
-            >
-            
-            <Typography
-              variant="body1"
-              sx={{
-                pt:"10px",
-                pb:"10px",
-              }}
-            >{formValue}</Typography>
-            
-          </Grid>
-          {idx !== location.state.formValues.length - 1 
-          ? <Grid item xs={12} key={`${idx}${idx}${idx}`} > 
-              <Divider /> 
+                <Typography
+                  variant="body1"
+                  sx={{
+                    pt:"10px",
+                    pb:"10px",
+                    pl:"5px",
+                    fontWeight:"bold",
+                  }}
+                >{valueNames[idx]}: </Typography>
+              </Grid>
+
+              <Grid item 
+                xs={6}
+                sx={{
+                  pt:"5px",
+                  pb:"5px",
+                }}
+                >
+                
+                <Typography
+                  variant="body1"
+                  sx={{
+                    pt:"10px",
+                    pb:"10px",
+                  }}
+                >{formValue}</Typography>
+              </Grid>
+
+              {idx !== location.state.formValues.length - 1 
+              ? <Grid item xs={12} > 
+                  <Divider /> 
+                </Grid>
+              : null
+              }
             </Grid>
-          : null
-          }
-          </>
-        );
-      })
+          );
+        })
       : null
       }
-    </Grid>
+    
     </Paper>
     <Button
       variant="contained"
