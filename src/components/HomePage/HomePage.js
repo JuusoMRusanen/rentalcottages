@@ -6,6 +6,7 @@ export default function RentalCottagesFrontPage() {
 
   const matches = useMediaQuery('(min-width:600px)');
   const [titleVariant, setTitleVariant] = useState("h2");
+  const [titleText, setTitleText] = useState("");
   
   useEffect(() => {
     if(matches) {
@@ -15,6 +16,11 @@ export default function RentalCottagesFrontPage() {
       setTitleVariant("h3");
     }
   }, [matches]);
+
+  // Get city or region name
+  const getCityOrRegionName = (value) => {
+    setTitleText(value)
+  }
 
 return (
   <>
@@ -35,7 +41,7 @@ return (
         color:"white",
         fontWeight:"bold",
       }}
-      >Kaikki mökit.</Typography>
+      >{titleText ? titleText : "Kaikki mökit."}</Typography>
   </Box>
 
   <Container 
@@ -45,7 +51,7 @@ return (
     }}
     >
 
-    <CottageCardGrid />
+    <CottageCardGrid getCityOrRegionName={getCityOrRegionName} />
 
   </Container>
   <Box 
