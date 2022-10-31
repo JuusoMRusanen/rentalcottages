@@ -5,6 +5,14 @@ class CottageDataService {
     return http.get("/cottages");
   }
 
+  getAllByRegionId(id) {
+    return http.get(`/cottages/region/${id}`);
+  }
+
+  getAllByCityId(id) {
+    return http.get(`/cottages/city/${id}`);
+  }
+
   get(id) {
     return http.get(`/cottages/${id}`);
   }

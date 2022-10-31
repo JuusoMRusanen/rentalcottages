@@ -8,7 +8,7 @@ import CottageDataService from '../../services/cottage.service';
 import ReviewDataService from '../../services/review.service';
 import PhotoDataService from '../../services/photo.service';
 
-export default function CottageCardGrid() {
+export default function CottageCardGrid({ getCityOrRegionName }) {
 
   const params = useParams();
 
@@ -22,12 +22,8 @@ export default function CottageCardGrid() {
   const [allPhotos, setAllPhotos] = useState([]);
   const [pageCottages, setPageCottages] = useState([]);
 
-  const [cityId, setCityId] = useState(null);
-  const [regionId, setRegionId] = useState(null);
-
   // Parameter function for pagination component
   const paginate = (currentPage) => {
-
     setLoading(true) // Page is changing, need to get a new page of cottages
     setCurrentPage(currentPage); // Update page number
   };
@@ -40,7 +36,7 @@ export default function CottageCardGrid() {
       const endRow = currentPage * cottagesPerPage;
       const startRow = endRow - cottagesPerPage;
 
-      // Fetch all reviews
+      // Get all reviews
       const getAllUserRatings = async () => {
         ReviewDataService.getAll()
         .then(response => {
@@ -48,7 +44,7 @@ export default function CottageCardGrid() {
         })
       }
 
-      // Fetch all Photos
+      // Get all Photos
       const getAllPhotos = async () => {
         PhotoDataService.getAll()
         .then(response => {
@@ -63,10 +59,35 @@ export default function CottageCardGrid() {
           setAllCottages(response.data);
         })
       }
+
+      // Get all cottages by regionId
+      const getAllCottagesByRegionId = async (id) => {
+        CottageDataService.getAllByRegionId(id)
+        .then(response => {
+          setAllCottages(response.data);
+        })
+      }
+
+      // Get all cottages by cityId
+      const getAllCottagesByCityId = async (id) => {
+        CottageDataService.getAllByCityId(id)
+        .then(response => {
+          console.log(response.data);
+          setAllCottages(response.data);
+        })
+      }
         
       // If cottages haven't been fetched yet
       if (allCottages.length === 0) {
-        getAllCottages();
+        if (params.cityId) {
+          getAllCottagesByCityId(params.cityId);
+        }
+        else if (params.regionId) {
+          getAllCottagesByRegionId(params.regionId)
+        }
+        else {
+          getAllCottages();
+        }
       }
 
       // If user ratings haven't been fetched yet
@@ -74,42 +95,17 @@ export default function CottageCardGrid() {
         getAllUserRatings();
       }
 
-      if (params.cityId) {
-        setCityId(params.cityId)
-      } else {
-        setCityId(null)
-      }
-
-      if (params.regionId) {
-        setRegionId(params.regionId)
-      } else {
-        setRegionId(null)
-      }
-
       // If page hasn't loaded yet and all cottages have been fetched
       if (allCottages.length > 0 && allUserRatings.length > 0 && loading) {
+
+        // Get city or region name for page title
+        if (params.cityId) {
+          getCityOrRegionName(allCottages[0].cityName)
+        }
+        if (params.regionId) {
+          getCityOrRegionName(allCottages[0].regionName)
+        }
         
-        let cottagesArray = [];
-
-        // Sort cottages by city or region if an ID is specified
-        if (cityId) {      
-          allCottages.forEach((cottage) => {
-            if (cottage[0].cityId === Number(cityId)) {
-              
-              cottagesArray.push(cottage)
-            } 
-          })
-          setAllCottages(cottagesArray)
-        }
-        if (regionId) {
-          allCottages.forEach((cottage) => {
-            if (cottage[0].regionId === regionId) {
-              cottagesArray.push(cottage)
-            } 
-          })
-          setAllCottages(cottagesArray)
-        }
-
         let slicedCottages = allCottages.slice(startRow, endRow); // Slice all cottages to a page of cottages
 
         setPageCottages(slicedCottages) // Set page of cottages
@@ -125,8 +121,7 @@ export default function CottageCardGrid() {
 
     }, 500);
     return () => clearTimeout(timer);
-    
-    },[ pageCottages, currentPage, allCottages, allPhotos, loading, cottagesPerPage, allUserRatings, params.cityId, params.regionId, cityId, regionId ])
+    },[ pageCottages, currentPage, allCottages, allPhotos, loading, cottagesPerPage, allUserRatings, params.cityId, params.regionId, getCityOrRegionName ])
 
   return (
     <>
