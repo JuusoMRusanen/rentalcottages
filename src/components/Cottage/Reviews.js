@@ -32,7 +32,6 @@ export default function Reviews({ userReviews }) {
         const date = moment(userReview.date).format('DD.MM.YYYY')
 
         return(
-          <>
           <Box
             key={index}
             sx={{
@@ -41,23 +40,29 @@ export default function Reviews({ userReviews }) {
               p:'10px',
             }}
             >
+          <Box
+            sx={{
+              width:'100%',
+              height:'auto',
+              p:'10px',
+            }}
+            >
             <StarRating rating={userReview.rating} />
             
-            <Typography variant="body1" sx={{ mt:'10px' }}>{userReview.comment}</Typography>
+            <Typography variant="body1" sx={{ mt:'10px' }} >{userReview.comment}</Typography>
             <Typography variant="body1" sx={{ mt:'10px' }} >{userReview.nickName} {date}</Typography>
           </Box>
 
           {index !== userReviews.length - 1
           ?
           <Divider 
-            key={index} 
             sx={{
               p:'20px',
             }}
             />
           : null
           }
-          </>
+          </Box>
         )
       })}
     </Box>
