@@ -1,11 +1,8 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 
-export default function DropDownMenu(props) {
-
-  const menuTitle = props.menuTitle;
-  const menuItems = props.menuItems;
+export default function DropDownMenu({ title, items, hidden, url }) {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -20,7 +17,7 @@ export default function DropDownMenu(props) {
     <div>
       <Button
         sx={{
-          visibility:props.hidden
+          visibility:hidden
         }}
         color="inherit"
         id="basic-button"
@@ -28,7 +25,7 @@ export default function DropDownMenu(props) {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        >{menuTitle}<KeyboardArrowDownIcon />
+        >{title}<KeyboardArrowDownIcon />
       </Button>
 
       <Menu
@@ -40,9 +37,27 @@ export default function DropDownMenu(props) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        {menuItems.map((menuItem) => {
+        {items.map((item) => {
+          //console.log(item);
           return(
-            <MenuItem key={menuItem.id} onClick={handleClose}>{menuItem.name}</MenuItem>
+            <Box
+              sx={{
+                width:'180px',
+                height:'25px',
+                ml:"10px"
+              }}
+              key={"menuitem"+item.id} 
+              >
+              <MenuItem sx={{m:"0 0 0 0", p:"0 0 0 0"}} key={item.title+item.id} >
+                <Box sx={{m:"0 0 0 0", p:"0 100% 0 0", textAlign:"left"}} 
+                  onClick={
+                    () => {
+                      window.location.replace(`${url}/${item.id}`)
+                    }
+                  }
+                >{item.name}</Box>
+              </MenuItem>
+            </Box>
           );
         })}
       </Menu>

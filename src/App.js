@@ -1,12 +1,11 @@
 import { createTheme, ThemeProvider } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import Cottage from "./components/Cottage/Cottage";
-// import BrowseCottages from "./BrowseCottages";
 import ReserveCottage from "./components/ReservationPage/ReserveCottage";
-import CustomAppBar from "./components/AppBar/CustomAppBar";
 import ReservationSummary from "./components/ReservationPage/ReservationSummary";
 import HomePage from "./components/HomePage/HomePage";
 import PhotoPostForm from "./components/PhotoPostForm";
+import Navbar from "./components/AppBar/Navbar";
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -73,19 +72,14 @@ export default function RentalCottages() {
     }
   });
 
-  // <Route path={'/browse'} element={<BrowseCottages />} />
-  // <Route path={'/reserve/:id'} element={<ReserveCottage />} />
-
   return (
     <div className="App">
     <ThemeProvider theme={theme}>
-
-      <CustomAppBar />
-
+      <Navbar/>
       <Routes>
-        <Route path={'/'} element={<HomePage />} />
-        <Route path={'/city/:cityId'} element={<HomePage />} />
-        <Route path={'/region/:regionId'} element={<HomePage />} />
+        <Route path={'/'} element={<HomePage/>} />
+        <Route path={'/city/:cityId'} element={<HomePage/>} />
+        <Route path={'/region/:regionId'} element={<HomePage/>} />
         <Route path={'/cottage/:id'} element={<Cottage />} />
         <Route path={'/reserve/:id'} element={<ReserveCottage />} />
         <Route path={'/summary'} element={<ReservationSummary />} />

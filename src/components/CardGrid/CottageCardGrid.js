@@ -72,23 +72,21 @@ export default function CottageCardGrid({ getCityOrRegionName }) {
       const getAllCottagesByCityId = async (id) => {
         CottageDataService.getAllByCityId(id)
         .then(response => {
-          console.log(response.data);
           setAllCottages(response.data);
         })
       }
         
       // If cottages haven't been fetched yet
-      if (allCottages.length === 0) {
-        if (params.cityId) {
-          getAllCottagesByCityId(params.cityId);
-        }
-        else if (params.regionId) {
-          getAllCottagesByRegionId(params.regionId)
-        }
-        else {
-          getAllCottages();
-        }
+      if (params.cityId && allCottages.length === 0) {
+        getAllCottagesByCityId(params.cityId);
       }
+      if (params.regionId && allCottages.length === 0) {
+        getAllCottagesByRegionId(params.regionId)
+      }
+      if (!params.cityId && !params.regionId && allCottages.length === 0) {
+        getAllCottages();
+      }
+      
 
       // If user ratings haven't been fetched yet
       if (allUserRatings.length === 0) {
