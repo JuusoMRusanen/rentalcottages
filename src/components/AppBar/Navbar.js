@@ -15,7 +15,7 @@ export default function Navbar() {
 
   const [cities, setCities] = useState([]);
   const [regions, setRegions] = useState([]);
-  const [rootURL] = useState("http://localhost:3000/");
+  const [rootURL] = useState("/");
   
   useEffect(() => {
 
@@ -86,7 +86,7 @@ export default function Navbar() {
           </Typography>
 
           <Button
-            href="http://localhost:3000/"
+            href="/"
             color="inherit"
             sx={{
               marginLeft: "60px"
