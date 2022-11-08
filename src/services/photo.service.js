@@ -14,7 +14,7 @@ class PhotoDataService {
   }
 
   create(data) {
-    return http.post("/photos", data);
+    return http.post("/photos", data.formData);
   }
 
   update(id, data) {

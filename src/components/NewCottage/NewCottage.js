@@ -3,7 +3,6 @@ import { Container } from "@mui/system";
 import { useEffect, useState } from "react";
 import CottageDataService from '../../services/cottage.service';
 import CityDataService from "../../services/city.service";
-import PhotoDataService from "../../services/photo.service";
 import JumboTitle from "../JumboTitle/JumboTitle";
 
 export default function NewCottage(){
@@ -15,19 +14,32 @@ export default function NewCottage(){
   const [bathrooms, setBathrooms] = useState();
   const [price, setPrice] = useState();
   const [size, setSize] = useState();
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState(null);
 
   const [cities, setCities] = useState([]);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (e) => {
+
+    // prevent the page from reloading
+    e.preventDefault();
+
+    // construct form data for posting photos
+    const formData = new FormData(e.currentTarget);
+    const files = e.currentTarget.files;
+
+    formData.append('name', cottageName);
+    formData.append('cityId', cityId);
+    formData.append('bedrooms', bedrooms);
+    formData.append('bathrooms', bathrooms);
+    formData.append('price', price);
+    formData.append('size', size);
+    
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+    }
 
     CottageDataService.create({
-      name: cottageName,
-      cityId: cityId,
-      bedrooms: bedrooms,
-      bathrooms: bathrooms,
-      price: price,
-      size: size
+      formData: formData,
     })
     .then(function (response) {
       console.log(response);
@@ -36,15 +48,6 @@ export default function NewCottage(){
       console.log(error);
     });
 
-    PhotoDataService.create({
-      selectedFile: selectedFile,
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
   }
 
   // Styles
@@ -78,12 +81,13 @@ export default function NewCottage(){
     <Container maxWidth="xl"
       sx={{
         marginTop:"100px",
+        mb:"200px",
         alignContent:"center",
       }}
     >
     
-    <form onSubmit={handleSubmit} >
-      <FormGroup encType="multipart/form-data">
+    <form onSubmit={handleSubmit} encType="multipart/form-data">
+      <FormGroup>
 
         <Button
           variant='outlined'
@@ -126,18 +130,24 @@ export default function NewCottage(){
 
         <TextField
           id="bedrooms"
-          label="Makuuhuoneet" 
           type="number"
           value={bedrooms || ''}
+          label="Makuuhuoneet"
+          InputProps={{
+            startAdornment: <InputAdornment position="start">{"kpl"}</InputAdornment>,
+          }}
           sx={{ m:textFieldMargin }}
           onChange={(e) => setBedrooms(e.target.value)}
           />
 
         <TextField
           id="bathrooms"
-          label="Kylpyhuoneet" 
           type="number"
           value={bathrooms || ''}
+          label="Kylpyhuoneet"
+          InputProps={{
+            startAdornment: <InputAdornment position="start">{"kpl"}</InputAdornment>,
+          }}
           sx={{ m:textFieldMargin }}
           onChange={(e) => setBathrooms(e.target.value)}
           />
@@ -166,19 +176,18 @@ export default function NewCottage(){
           onChange={(e) => setSize(e.target.value)}
           />
 
+        <input
+          multiple
+          type="file" 
+          name="files" 
+          onChange={(e) => setSelectedFiles(e.target.files)}
+          />
         
-          <input 
-            type="file" 
-            name="selectedFile" 
-            onChange={(e) => setSelectedFile(e.target.files[0])}
-            />
-        
-
         <Button 
           variant="outlined" 
           size="large"
+          type="submit"
           sx={{ m:textFieldMargin }}
-          onClick={handleSubmit}
           >Tallenna
         </Button>
 

@@ -18,7 +18,7 @@ class CottageDataService {
   }
 
   create(data) {
-    return http.post("/cottages", data);
+    return http.post("/cottages", data.formData);
   }
 
   update(id, data) {
