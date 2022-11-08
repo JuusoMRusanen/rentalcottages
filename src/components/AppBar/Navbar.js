@@ -6,6 +6,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import DropDownMenu from "./DropDownMenu";
 import CityDataService from "../../services/city.service";
 import RegionDataService from "../../services/region.service";
+import AddIcon from '@mui/icons-material/Add';
 
 export default function Navbar() {
 
@@ -102,6 +103,14 @@ export default function Navbar() {
             </>
           : null
           }
+
+          <Button
+            href="/newcottage"
+            color="inherit"
+            sx={{
+            }}
+            >Lisää mökki <AddIcon />
+          </Button>
         </>
         }
       </Toolbar>
