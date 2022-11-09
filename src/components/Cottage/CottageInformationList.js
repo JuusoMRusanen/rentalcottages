@@ -3,35 +3,52 @@ import HotelIcon from '@mui/icons-material/Hotel';
 import HomeIcon from '@mui/icons-material/Home';
 import BathtubIcon from '@mui/icons-material/Bathtub';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
-import { Avatar, Box, Divider, List, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
+import { Avatar, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Tooltip } from '@mui/material';
 
-export default function CottageInformationList({cottageData, avatarSize, dividers, showPrimary, primaryFontSize, secondaryFontSize, listPadding, listMarginTop, listMarginBottom, itemPadding, itemMarginTop, itemMarginBottom, textPadding, textMargin }) {
+export default function CottageInformationList({
+  cottageData, 
+  avatarSize, 
+  dividers, 
+  showPrimary, 
+  primaryFontSize, 
+  secondaryFontSize, 
+  listPadding, 
+  listMarginTop, 
+  listMarginBottom, 
+  itemPadding, 
+  itemMarginTop, 
+  itemMarginBottom, 
+  textPadding, 
+  textMargin,
+  primaryPadding,
+  secondaryPadding
+}) {
 
     const cottage = cottageData;
 
     const items = [
       {
-        icon : <LocationIcon/>,
+        icon : <Tooltip title={`Sijainti`}><LocationIcon/></Tooltip>,
         primary : "Sijainti:",
         secondary : `${cottage.cityName}, ${cottage.regionName}`
       },
       {
-        icon : <HotelIcon/>,
+        icon : <Tooltip title={`Majoitus`}><HotelIcon/></Tooltip>,
         primary : "Majoitus:",
         secondary : `${cottage.bedrooms} makuuhuonetta`
       },
       {
-        icon : <HomeIcon/>,
+        icon : <Tooltip title={`Tilavuus`}><HomeIcon/></Tooltip>,
         primary : "Tilavuus:",
         secondary : `${cottage.size}m${"\u00B2"}`
       },
       {
-        icon : <BathtubIcon/>,
+        icon : <Tooltip title={`Kylpyhuoneet`}><BathtubIcon/></Tooltip>,
         primary : "Kylpyhuoneet:",
         secondary : `${cottage.bathrooms} kylpyhuonetta`
       },
       {
-        icon : <CreditCardIcon/>,
+        icon : <Tooltip title={`Hinta`}><CreditCardIcon/></Tooltip>,
         primary : "Hinta:",
         secondary : `${cottage.price}€ /vko`
       }
@@ -57,13 +74,15 @@ export default function CottageInformationList({cottageData, avatarSize, divider
               sx={{
                 mt: itemMarginTop ? itemMarginTop : 0,
                 mb: itemMarginBottom ? itemMarginBottom : 0,
-                p: itemPadding ? itemPadding : "5px",
+                ml: "10px",
+                p: itemPadding ? itemPadding : 0,
               }}
               >
               <ListItemAvatar
                 sx={{
                   m:0,
                   p:0,
+                  
                 }}
                 >
                 <Avatar
@@ -80,9 +99,11 @@ export default function CottageInformationList({cottageData, avatarSize, divider
               <ListItemText
                 primaryTypographyProps={{
                     fontSize: primaryFontSize ? primaryFontSize : "18px",
+                    p: primaryPadding ? primaryPadding : 0, 
                 }} 
                 secondaryTypographyProps={{
                     fontSize: secondaryFontSize ? secondaryFontSize : "18px",
+                    p: secondaryPadding ? secondaryPadding : 0, 
                 }}
                 primary={showPrimary ? item.primary : null}
                 secondary={item.secondary}

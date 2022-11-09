@@ -1,5 +1,5 @@
 import { Box, Divider, Typography } from "@mui/material";
-import StarRating from "../StarRating";
+import StarRating from "../StarRating/StarRating";
 import moment from 'moment';
 
 export default function Reviews({ userReviews }) {
@@ -47,7 +47,7 @@ export default function Reviews({ userReviews }) {
               p:'10px',
             }}
             >
-            <StarRating rating={userReview.rating} />
+            <StarRating rating={userReview.rating} disableTooltip={true} />
             
             <Typography variant="body1" sx={{ mt:'10px' }} >{userReview.comment}</Typography>
             <Typography variant="body1" sx={{ mt:'10px' }} >{userReview.nickName} {date}</Typography>

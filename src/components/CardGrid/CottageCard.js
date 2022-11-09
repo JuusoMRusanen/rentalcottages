@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { CardHeader, CardContent, Card, Button, Divider } from '@mui/material';
-import StarRating from '../StarRating';
+import StarRating from '../StarRating/StarRating';
 import { Link } from 'react-router-dom';
-import PhotoCarousel from '../PhotoCarousel';
+import PhotoCarousel from '../PhotoCarousel/PhotoCarousel';
 import CottageInformationList from '../Cottage/CottageInformationList';
 
 export default function CottageCard({cottageData, photosData, rating, countOfRatings}) {
@@ -21,31 +21,23 @@ export default function CottageCard({cottageData, photosData, rating, countOfRat
       <PhotoCarousel photos={photosData} cardSized={true} bottomCarousel={false} />
 
       <CardHeader
-        titleTypographyProps={{ margin:0, padding:0, fontWeight:"bold" }}
+        titleTypographyProps={{ margin:0, padding:0, fontWeight:"bold", fontSize:"20px" }}
         title={`${cottage.cottageId}, ${cottage.cottageName}`}
         sx={{
-          padding:0,
-          paddingTop:2,
-          height:40,
+          p:"10px 0 0 0",
+          m:0,
+          height:"35px",
         }}
       />
 
       <CardContent
         sx={{
           p:0,
+          m:0,
         }}
         >
-        <StarRating rating={rating} countOfRatings={countOfRatings} showCountOfRatings={true} />
-        <Divider 
-          variant='middle'
-          sx={{
-            mt:"5px",
-            mb:"5px",
-            p:"0px",
-          }}
-        />
-
-        <CottageInformationList cottageData={cottage}/>
+        <StarRating rating={rating} countOfRatings={countOfRatings} showCountOfRatings={false} />
+        <CottageInformationList cottageData={cottage} itemPadding={"2px"} />
       </CardContent>
 
       <Button 

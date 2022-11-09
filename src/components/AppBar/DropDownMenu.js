@@ -1,8 +1,8 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Box, Button, Menu, MenuItem } from '@mui/material';
+import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import { useState } from 'react';
 
-export default function DropDownMenu({ title, items, hidden, url }) {
+export default function DropDownMenu({ title, items, hidden, baseURL }) {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -42,20 +42,26 @@ export default function DropDownMenu({ title, items, hidden, url }) {
           return(
             <Box
               sx={{
-                width:'180px',
-                height:'25px',
-                ml:"10px"
+                width:'auto',
+                height:'auto',
+                m:"0 10px 0 10px"
               }}
               key={"menuitem"+item.id} 
               >
-              <MenuItem sx={{m:"0 0 0 0", p:"0 0 0 0"}} key={item.title+item.id} >
-                <Box sx={{m:"0 0 0 0", p:"0 100% 0 0", textAlign:"left"}} 
+              <MenuItem sx={{ m:"0 0 0 0", p:"2px" }} key={item.title+item.id} >
+                <Box sx={{ m:"0 0 0 0", p:"0 100% 0 0", textAlign:"left" }} 
                   onClick={
                     () => {
-                      window.location.replace(`${url}/${item.id}`)
+                      window.location.replace(`${baseURL}/${item.id}`)
                     }
                   }
-                >{item.name}</Box>
+                  >
+                  <Typography
+                    sx={{ fontSize:"18px" }}
+                    >
+                    {item.name}
+                  </Typography>
+                </Box>
               </MenuItem>
             </Box>
           );
