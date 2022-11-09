@@ -6,13 +6,12 @@ import ReservationSummary from "./components/ReservationPage/ReservationSummary"
 import HomePage from "./components/HomePage/HomePage";
 import PhotoPostForm from "./components/PhotoPostForm";
 import Navbar from "./components/AppBar/Navbar";
-
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import PostTestData from "./components/PostTestData";
-import NewCottage from "./components/NewCottage/NewCottage";
+import CreateCottage from "./components/CreateCottage/CreateCottage";
 
 export default function RentalCottages() {
 
@@ -86,7 +85,7 @@ export default function RentalCottages() {
         <Route path={'/summary'} element={<ReservationSummary />} />
         <Route path={'/photopostform'} element={<PhotoPostForm /> } />
         <Route path={'/posttestdata'} element={<PostTestData /> } />
-        <Route path={'/newcottage'} element={<NewCottage/>} />
+        <Route path={'/createcottage'} element={<CreateCottage/>} />
       </Routes>
     </ThemeProvider>
     </div>
