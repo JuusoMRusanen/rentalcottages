@@ -1,8 +1,8 @@
 import { Typography, Container, Grid, Box, Divider, Button, Paper, CircularProgress } from '@mui/material';
 import { useEffect, useRef, useState } from "react";
 import { useParams, Link } from 'react-router-dom';
-import StarRating from '../StarRating';
-import PhotoCarousel from '../PhotoCarousel';
+import StarRating from '../StarRating/StarRating';
+import PhotoCarousel from '../PhotoCarousel/PhotoCarousel';
 import DateRangePickerCalendar from '../DatePicker/DateRangePickerCalendar';
 import CottageInformationList from './CottageInformationList';
 import Reviews from './Reviews';
