@@ -16,7 +16,7 @@ export default function Navbar() {
 
   const [cities, setCities] = useState([]);
   const [regions, setRegions] = useState([]);
-  const [rootURL] = useState("/");
+  const [baseURL] = useState("/");
   
   useEffect(() => {
 
@@ -98,14 +98,14 @@ export default function Navbar() {
           {regions.length > 0 && cities.length > 0
           ? 
             <>
-              <DropDownMenu url={rootURL+'region'} title={"Alueet"} items={regions} />
-              <DropDownMenu url={rootURL+'city'} title={"Kaupungit"} items={cities} />
+              <DropDownMenu baseURL={baseURL+'region'} title={"Alueet"} items={regions} />
+              <DropDownMenu baseURL={baseURL+'city'} title={"Kaupungit"} items={cities} />
             </>
           : null
           }
 
           <Button
-            href="/newcottage"
+            href="/createcottage"
             color="inherit"
             sx={{
             }}
