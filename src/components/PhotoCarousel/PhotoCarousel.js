@@ -5,7 +5,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 
 export default function PhotoCarousel({ photos, height, cardSized, bottomCarousel }) {
-  console.log(photos);
   const [photoIndex, setPhotoIndex] = useState(0);
   
   const photoRef = React.useRef([null]);
