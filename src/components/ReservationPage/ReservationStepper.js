@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -10,6 +10,7 @@ import DateRangePickerCalendarExample from '../DatePicker/DateRangePickerCalenda
 import { Checkbox, FormControlLabel, FormGroup, Paper, TextField } from '@mui/material';
 import cottages from '../Data/cottages.json';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
+import ReservationDataService from './../../services/reservation.service';
 
 export default function ReservationStepper() {
 
@@ -20,35 +21,35 @@ export default function ReservationStepper() {
   const cottage = cottages[params.id - 1];
 
   // Date picker values
-  const [startDate, setStartDate] = React.useState(location.state.startDate ? location.state.startDate : null);
-  const [endDate, setEndDate] = React.useState(location.state.endDate ? location.state.endDate : null);
+  const [startDate, setStartDate] = useState(location.state.startDate ? location.state.startDate : null);
+  const [endDate, setEndDate] = useState(location.state.endDate ? location.state.endDate : null);
 
   // Form values
-  const [firstName, setFirstName] = React.useState('');
-  const [lastName, setLastName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [homeAddress, setHomeAddress] = React.useState('');
-  const [postalCode, setPostalCode] = React.useState('');
-  const [postalDistrict, setPostalDistrict] = React.useState('');
-  const [cleanUp, setCleanup] = React.useState(false);
-  const [consent, setConsent] = React.useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [homeAddress, setHomeAddress] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [postalDistrict, setPostalDistrict] = useState('');
+  const [cleanUp, setCleanup] = useState(false);
+  const [consent, setConsent] = useState(false);
 
   // Form errors
-  const [firstNameError, setFirstNameError] = React.useState(false);
-  const [lastNameError, setLastNameError] = React.useState(false);
-  const [emailError, setEmailError] = React.useState(false);
-  const [homeAddressError, setHomeAddressError] = React.useState(false);
-  const [postalCodeError, setPostalCodeError] = React.useState(false);
-  const [postalDistrictError, setPostalDistrictError] = React.useState(false);
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [homeAddressError, setHomeAddressError] = useState(false);
+  const [postalCodeError, setPostalCodeError] = useState(false);
+  const [postalDistrictError, setPostalDistrictError] = useState(false);
 
   // Next Button disabled/enabled
-  const [disabled, setDisabled] = React.useState(true);
+  const [disabled, setDisabled] = useState(true);
 
   // Final price
-  const [finalPrice, setFinalPrice] = React.useState(0);
+  const [finalPrice, setFinalPrice] = useState(0);
 
   // Form values to be sent
-  const [formValues, setFormValues] = React.useState([]);
+  const [formValues, setFormValues] = useState([]);
 
   const textFieldMargin = "10px";
 
@@ -88,6 +89,7 @@ export default function ReservationStepper() {
             setPostalDistrict("Ankkalinna");
           }}
         >Automaattinen täyttö</Button>
+
         <br></br>
         <TextField
           sx={{
@@ -236,7 +238,7 @@ export default function ReservationStepper() {
     },
   ];
   
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -246,7 +248,34 @@ export default function ReservationStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  React.useEffect(() => {
+  const handleSubmit = async (e) => {
+
+    // prevent the page from reloading
+    e.preventDefault();
+
+    await ReservationDataService.create({
+      'cottageId' : cottage.id,
+      'firstName' : firstName,
+      'lastName' : lastName,
+      'email' : email,
+      'homeAddress' : homeAddress,
+      'postalCode' : postalCode,
+      'postalDistrict' : postalDistrict,
+      'cleanUp' : cleanUp,
+      'finalPrice' : finalPrice,
+      'startDate' : startDate,
+      'endDate': endDate
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  }
+
+  useEffect(() => {
 
     const formValues = [firstName, lastName, email, homeAddress, postalCode, postalDistrict];
     setFormValues([`${cottage.id}, ${cottage.name}`, firstName, lastName, email, homeAddress, postalCode, postalDistrict, cleanUp ? "Kyllä" : "Ei", finalPrice]);
@@ -349,7 +378,7 @@ export default function ReservationStepper() {
     setPostalCodeError, 
     setPostalDistrictError,
     cottage.id,
-    cottage.name,
+    cottage.name
   ]);
 
   return (
@@ -359,6 +388,8 @@ export default function ReservationStepper() {
         }}
       >
       <form
+        onSubmit={handleSubmit}
+        encType="application/json"
       >
       <Stepper activeStep={activeStep} orientation="vertical" >
         {steps.map((step, index) => (
@@ -409,7 +440,7 @@ export default function ReservationStepper() {
           <Typography>Lähetetään lomaketta...</Typography>
           <Navigate
             replace 
-            to="../summary" 
+            to="/summary" 
             state={{
               formValues: formValues,
             }}
