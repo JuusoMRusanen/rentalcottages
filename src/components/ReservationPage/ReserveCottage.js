@@ -1,13 +1,37 @@
 import { Container, Divider, Grid, Typography } from '@mui/material';
 import ReservationStepper from './ReservationStepper';
-import cottages from '../Data/cottages.json';
 import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import CottageDataService from '../../services/cottage.service';
 
 export default function ReserveCottage() {
 
   // Current cottage
   const params = useParams();
-  const cottage = cottages[params.id - 1];
+
+  const [data, setData] = useState([]);
+  const [gotCottage, setGotCottage] = useState(false);
+  const [cottage, setCottage] = useState(null);
+
+  useEffect(() => {
+
+    // Set data
+    if (data) {
+      try {
+        setCottage(data.cottage[0])
+      } catch (error) {}
+    }
+
+    // Data fetch
+    if ( !gotCottage ) {
+      CottageDataService.get(params.id)
+      .then(res => setData(res.data, res.error))
+      .catch(err => console.log(err));
+      
+      setGotCottage(true);
+    }
+
+  }, [ gotCottage, params, cottage, data ]);
 
   return (
     <>
@@ -47,7 +71,7 @@ export default function ReserveCottage() {
               mb:"40px",
             }}
             >
-            Kohde: {cottage.id}, {cottage.name}</Typography>
+            Kohde: {cottage ? cottage.id : null}, {cottage ? cottage.name : null}</Typography>
 
           <ReservationStepper />
           

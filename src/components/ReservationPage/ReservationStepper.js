@@ -7,10 +7,10 @@ import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DateRangePickerCalendarExample from '../DatePicker/DateRangePickerCalendar';
-import { Checkbox, CircularProgress, FormControlLabel, FormGroup, LinearProgress, Paper, TextField } from '@mui/material';
-import cottages from '../Data/cottages.json';
+import { Checkbox, FormControlLabel, FormGroup, LinearProgress, Paper, TextField } from '@mui/material';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import ReservationDataService from './../../services/reservation.service';
+import CottageDataService from '../../services/cottage.service';
 
 export default function ReservationStepper() {
 
@@ -18,7 +18,10 @@ export default function ReservationStepper() {
 
   // Current cottage
   const params = useParams();
-  const cottage = cottages[params.id - 1];
+
+  const [data, setData] = useState([]);
+  const [gotCottage, setGotCottage] = useState(false);
+  const [cottage, setCottage] = useState(null);
 
   // Date picker values
   const [startDate, setStartDate] = useState(location.state.startDate ? location.state.startDate : null);
@@ -72,7 +75,7 @@ export default function ReservationStepper() {
         setEndDate={setEndDate}
         />
       <Typography variant='h6' mb={"0px"}>Loppuhinta: {finalPrice}€</Typography>
-      <Typography variant='body1' mb={"20px"}>({cottage.price}€ /vko)</Typography>
+      <Typography variant='body1' mb={"20px"}>({cottage ? cottage.price : null}€ /vko)</Typography>
       </>
     },
     { // SECOND STEP
@@ -288,6 +291,24 @@ export default function ReservationStepper() {
 
   useEffect(() => {
 
+    // Set data
+    if (data) {
+      try {
+        setCottage(data.cottage[0])
+      } catch (error) {}
+    }
+
+    // Data fetch
+    if ( !gotCottage ) {
+      CottageDataService.get(params.id)
+      .then(res => setData(res.data, res.error))
+      .catch(err => console.log(err));
+      
+      setGotCottage(true);
+    }
+
+    if(cottage) {
+
     const formValues = [firstName, lastName, email, homeAddress, postalCode, postalDistrict];
     setFormValues([`${cottage.id}, ${cottage.name}`, firstName, lastName, email, homeAddress, postalCode, postalDistrict, cleanUp ? "Kyllä" : "Ei", finalPrice]);
     //const errors = [firstNameError, lastNameError, emailError, homeAddressError, postalCodeError, postalDistrictError];
@@ -360,6 +381,8 @@ export default function ReservationStepper() {
       calculateFinalPrice();
     }
 
+  }
+
   },[
     firstName, 
     lastName, 
@@ -378,8 +401,7 @@ export default function ReservationStepper() {
     activeStep, 
     endDate, 
     startDate, 
-    cleanUp, 
-    cottage.price, 
+    cleanUp,  
     setFinalPrice, 
     finalPrice,
     setFirstNameError, 
@@ -388,8 +410,10 @@ export default function ReservationStepper() {
     setHomeAddressError, 
     setPostalCodeError, 
     setPostalDistrictError,
-    cottage.id,
-    cottage.name
+    gotCottage, 
+    params, 
+    cottage, 
+    data
   ]);
 
   return (

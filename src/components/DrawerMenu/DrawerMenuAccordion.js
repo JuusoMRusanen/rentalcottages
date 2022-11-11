@@ -6,7 +6,7 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import { Box, Button, Divider, Grid } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import CityDataService from '../../services/city.service';
 import RegionDataService from '../../services/region.service';
 import AddIcon from '@mui/icons-material/Add';

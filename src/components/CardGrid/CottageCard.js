@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CardHeader, CardContent, Card, Button, Divider } from '@mui/material';
+import { CardHeader, CardContent, Card, Button } from '@mui/material';
 import StarRating from '../StarRating/StarRating';
 import { Link } from 'react-router-dom';
 import PhotoCarousel from '../PhotoCarousel/PhotoCarousel';

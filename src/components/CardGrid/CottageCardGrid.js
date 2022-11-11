@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Grid, Box, CircularProgress } from '@mui/material';
 import CottagesPagination from './CottagesPagination';
 import CottageCard from './CottageCard';
@@ -28,7 +27,7 @@ export default function CottageCardGrid({ getCityOrRegionName }) {
     setCurrentPage(currentPage); // Update page number
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
 
     const timer = setTimeout(() => {
 
