@@ -10,6 +10,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import CreateCottage from "./components/CreateCottage/CreateCottage";
+import CreateCottageSummary from "./components/CreateCottage/CreateCottageSummary";
 
 export default function RentalCottages() {
 
@@ -81,7 +82,8 @@ export default function RentalCottages() {
         <Route path={'/cottage/:id'} element={<Cottage />} />
         <Route path={'/reserve/:id'} element={<ReserveCottage />} />
         <Route path={'/summary'} element={<ReservationSummary />} />
-        <Route path={'/createcottage'} element={<CreateCottage/>} />
+        <Route path={'/createcottage'} element={<CreateCottage />} />
+        <Route path={'/createcottagesummary'} element={<CreateCottageSummary />} />
       </Routes>
     </ThemeProvider>
     </div>
