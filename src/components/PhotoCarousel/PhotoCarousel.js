@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { Box, Button, Grid, useMediaQuery } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
+import getBaseURL from '../../getBaseURL';
 
 export default function PhotoCarousel({ photos, height, cardSized, bottomCarousel }) {
+  
   const [photoIndex, setPhotoIndex] = useState(0);
   
   const photoRef = React.useRef([null]);
@@ -183,7 +185,7 @@ export default function PhotoCarousel({ photos, height, cardSized, bottomCarouse
                 ref={x => photoRef.current[idx] = x}
                 key={idx}
                 sx={{ 
-                  backgroundImage:`url(http://localhost:8080/${photo.src})`, // FETCH FROM SERVER ???
+                  backgroundImage:`url(${getBaseURL()}${photo.src})`, // FETCH FROM SERVER ???
                   backgroundRepeat:"no-repeat",
                   backgroundSize:"cover",
                   width: "100%",
@@ -294,7 +296,7 @@ export default function PhotoCarousel({ photos, height, cardSized, bottomCarouse
                 ref={x => bottomPhotoRef.current[idx] = x}
                 key={idx}
                 sx={{ 
-                  backgroundImage:`url(http://localhost:8080${photo.src})`,
+                  backgroundImage:`url(${getBaseURL()}${photo.src})`,
                   backgroundRepeat:"no-repeat",
                   backgroundSize:"cover",
                   width: "100%",
