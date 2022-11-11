@@ -6,6 +6,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import DrawerMenuAccordion from './DrawerMenuAccordion';
 
 export default function DrawerMenu() {
+
+  const [baseURL] = React.useState("/");
+
   const [state, setState] = React.useState({
     left: false,
   });
@@ -27,10 +30,10 @@ export default function DrawerMenu() {
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 300 }}
       role="presentation"
     >
-      <DrawerMenuAccordion />
+      <DrawerMenuAccordion toggleDrawer={toggleDrawer} baseURL={baseURL} />
     </Box>
   );
-
+  
   return (
     <div>
       {['left'].map((anchor) => (
