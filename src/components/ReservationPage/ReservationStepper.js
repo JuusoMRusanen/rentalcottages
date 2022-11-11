@@ -7,7 +7,7 @@ import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DateRangePickerCalendarExample from '../DatePicker/DateRangePickerCalendar';
-import { Checkbox, FormControlLabel, FormGroup, Paper, TextField } from '@mui/material';
+import { Checkbox, CircularProgress, FormControlLabel, FormGroup, LinearProgress, Paper, TextField } from '@mui/material';
 import cottages from '../Data/cottages.json';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import ReservationDataService from './../../services/reservation.service';
@@ -50,6 +50,9 @@ export default function ReservationStepper() {
 
   // Form values to be sent
   const [formValues, setFormValues] = useState([]);
+
+  // Good response from server on form data send
+  const [success, setSuccess] = useState(false);
 
   const textFieldMargin = "10px";
 
@@ -253,25 +256,33 @@ export default function ReservationStepper() {
     // prevent the page from reloading
     e.preventDefault();
 
-    await ReservationDataService.create({
-      'cottageId' : cottage.id,
-      'firstName' : firstName,
-      'lastName' : lastName,
-      'email' : email,
-      'homeAddress' : homeAddress,
-      'postalCode' : postalCode,
-      'postalDistrict' : postalDistrict,
-      'cleanUp' : cleanUp,
-      'finalPrice' : finalPrice,
-      'startDate' : startDate,
-      'endDate': endDate
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    const timer = setTimeout( async () => {
+
+      await ReservationDataService.create({
+        'cottageId' : cottage.id,
+        'firstName' : firstName,
+        'lastName' : lastName,
+        'email' : email,
+        'homeAddress' : homeAddress,
+        'postalCode' : postalCode,
+        'postalDistrict' : postalDistrict,
+        'cleanUp' : cleanUp,
+        'finalPrice' : finalPrice,
+        'startDate' : startDate,
+        'endDate': endDate
+      })
+      .then(function (response) {
+        console.log(response.status);
+        if (response.status === 200) {
+          setSuccess(true)
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    }, 500);
+    return () => clearTimeout(timer);
 
   }
 
@@ -438,13 +449,16 @@ export default function ReservationStepper() {
       {activeStep === steps.length && (
         <Paper square elevation={0} sx={{ p: 3 }}>
           <Typography>Lähetetään lomaketta...</Typography>
-          <Navigate
-            replace 
-            to="/summary" 
-            state={{
-              formValues: formValues,
-            }}
+          <LinearProgress />
+          {success && (
+            <Navigate
+              replace 
+              to="/summary" 
+              state={{
+                formValues: formValues,
+              }}
             />
+          )}
         </Paper>
       )}
       </form>
