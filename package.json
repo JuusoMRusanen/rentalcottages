@@ -44,5 +44,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": "19.0.1",
+    "npm": "8.19.2"
   }
 }
