@@ -5,7 +5,6 @@ import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
 import { Box, Button, Grid } from '@mui/material';
 import CityDataService from '../../services/city.service';
 import RegionDataService from '../../services/region.service';
@@ -62,7 +61,7 @@ const BoxDivider = () => {
 
 export default function DrawerMenuAccordion({ toggleDrawer, baseURL }) {
 
-  const [expanded, setExpanded] = useState('');
+  const [expanded, setExpanded] = useState('panel1');
 
   const handleChange = (panel, listItemId, isFilter) => (event, newExpanded) => {
 
@@ -150,8 +149,7 @@ export default function DrawerMenuAccordion({ toggleDrawer, baseURL }) {
 
       <Button
         variant="contained"
-        component={Link}
-        to={"/"}
+        href="/"
         sx={{
           width:"100%",
           fontSize:"18px",
@@ -166,8 +164,7 @@ export default function DrawerMenuAccordion({ toggleDrawer, baseURL }) {
 
       <Button
         variant="contained"
-        component={Link}
-        to={"/createcottage"}
+        href="/createcottage"
         sx={{
           width:"100%",
           m: "0 0 0 40px",

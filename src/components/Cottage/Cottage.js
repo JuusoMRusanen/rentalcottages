@@ -69,6 +69,8 @@ export default function Cottage() {
     // Calculate overall rating of cottage and get count of ratings
     if (reviews && cottage) {
 
+      window.scrollTo(0,0);
+
       let sumOfRatings = 0;
       let countOfRatings = 0;
       let rating = 0;
