@@ -7,16 +7,22 @@ import DropDownMenu from "./DropDownMenu";
 import CityDataService from "../../services/city.service";
 import RegionDataService from "../../services/region.service";
 import AddIcon from '@mui/icons-material/Add';
+import { useTranslation } from "react-i18next";
 
 export default function Navbar() {
 
   const matches = useMediaQuery('(min-width:600px)');
-
   const [visibleOnMobile, setVisibleOnMobile] = useState(false);
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
 
   const [cities, setCities] = useState([]);
   const [regions, setRegions] = useState([]);
   const [baseURL] = useState("/");
+
+  function changeLanguage(countryCode) {
+    i18n.changeLanguage(countryCode);
+  }
   
   useEffect(() => {
 
@@ -74,7 +80,7 @@ export default function Navbar() {
             <HomeIcon />
 
             <Typography variant="h5" component="div">
-              Vuokramökit
+              {t('appBarTitle')}
             </Typography>
           </Box>
         </>
@@ -83,7 +89,7 @@ export default function Navbar() {
           <HomeIcon />
 
           <Typography variant="h5" component="div">
-            Vuokramökit
+            {t('appBarTitle')}
           </Typography>
 
           <Button
@@ -92,14 +98,14 @@ export default function Navbar() {
             sx={{
               marginLeft: "60px"
             }}
-            >Etusivu
+            >{t('home')}
           </Button>
           
           {regions.length > 0 && cities.length > 0
           ? 
             <>
-              <DropDownMenu baseURL={baseURL+'region'} title={"Alueet"} items={regions} />
-              <DropDownMenu baseURL={baseURL+'city'} title={"Kaupungit"} items={cities} />
+              <DropDownMenu baseURL={baseURL+'region'} title={t('regions')} items={regions} />
+              <DropDownMenu baseURL={baseURL+'city'} title={t('cities')} items={cities} />
             </>
           : null
           }
@@ -109,8 +115,34 @@ export default function Navbar() {
             color="inherit"
             sx={{
             }}
-            >Lisää mökki <AddIcon />
+            >{t('addCottage')} <AddIcon />
           </Button>
+            
+          <Box 
+            sx={{ 
+              height:"100%", 
+              width:"35px", 
+              cursor: "pointer",
+              m:"0 10px 0 10px",
+            }} 
+            onClick={ () => {
+              changeLanguage('en')
+            }} 
+            ><img src='/US-UK.svg'/>
+          </Box>
+
+          <Box 
+            sx={{ 
+              height:"100%", 
+              width:"35px", 
+              cursor: "pointer" 
+            }} 
+            onClick={ () => {
+              changeLanguage('fi')
+            }} 
+            ><img src='/FI.svg'/>
+          </Box>
+
         </>
         }
       </Toolbar>
