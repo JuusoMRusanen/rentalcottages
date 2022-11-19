@@ -2,7 +2,7 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import Cottage from "./components/Cottage/Cottage";
 import ReserveCottage from "./components/ReservationPage/ReserveCottage";
-import ReservationSummary from "./components/ReservationPage/ReservationSummary";
+import ReservationSummary from "./components/FormSummary/FormSummary";
 import HomePage from "./components/HomePage/HomePage";
 import Navbar from "./components/AppBar/Navbar";
 import '@fontsource/roboto/300.css';

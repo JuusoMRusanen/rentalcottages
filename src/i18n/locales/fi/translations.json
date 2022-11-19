@@ -3,5 +3,21 @@
   "home": "Etusivu",
   "regions": "Kunnat",
   "cities": "Kaupungit",
-  "addCottage": "Lisää mökki"
+  "addCottage": "Lisää mökki",
+  "cottageId": "Mökkinumero",
+  "cottageName": "Mökin nimi",
+  "firstName": "Etunimi",
+  "lastName": "Sukunimi",
+  "email": "Sähköposti",
+  "homeAddress": "Kotiosoite",
+  "postalCode": "Postinumero",
+  "postalDistrict": "Postitoimipaikka",
+  "cleanUp": "Siivouspalvelu",
+  "bookingDuration": "Varauksen kesto",
+  "finalPrice": "Loppuhinta",
+  "reservationSuccess": "Varaus onnistui!",
+  "reservationData": "Varauksen tiedot: ",
+  "returnHome": "Palaa etusivulle",
+  "dateLocale": "fi-FI",
+  "reserveNow": "Tutustu ja Varaa"
 }

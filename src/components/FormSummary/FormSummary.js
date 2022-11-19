@@ -1,39 +1,37 @@
-import { Box, Button, Container, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Button, Container, Divider, Grid, Paper, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 
-export default function ReservationSummary() {
+export default function FormSummary() {
 
   const location = useLocation();
-
-  const valueNames = [
-    "Varattu kohde",
-    "Etunimi",
-    "Sukunimi",
-    "Sähköpostiosoite",
-    "Kotiosoite",
-    "Postinumero",
-    "Postitoimipaikka",
-    "Loppusiivous",
-    "Loppuhinta(€)",
-  ];
+  const { t } = useTranslation();
   
   return(
-  <>
   <Container 
     maxWidth="md"
     sx={{
       textAlign: "center",
-      mt:"90px"
+      mt:"90px",
+      pb:"100px"
     }}
     >
-    <Typography variant="h2" mb={"50px"}>Varaus onnistui!</Typography>
+    <Typography 
+      variant="h2" 
+      mb={"50px"}
+      >{location.state.primaryTitle ? location.state.primaryTitle : null}
+    </Typography>
 
     <Paper
       sx={{
         mb:"30px",
       }}
     >
-    <Typography variant="h4" p={"20px"} >Varauksen tiedot:</Typography>
+    <Typography 
+      variant="h4" 
+      p={"20px"} 
+      >{location.state.secondaryTitle ? location.state.secondaryTitle : null}
+    </Typography>
     
       {location.state.formValues 
         ? location.state.formValues.map((formValue, idx) => {
@@ -41,6 +39,7 @@ export default function ReservationSummary() {
             <Grid container
               sx={{
                 textAlign:"left",
+                pl:"10px"
               }}
               key={`ListItem${idx}`}
               >
@@ -60,7 +59,7 @@ export default function ReservationSummary() {
                     pl:"5px",
                     fontWeight:"bold",
                   }}
-                >{valueNames[idx]}: </Typography>
+                >{formValue.name}: </Typography>
               </Grid>
 
               <Grid item 
@@ -77,7 +76,7 @@ export default function ReservationSummary() {
                     pt:"10px",
                     pb:"10px",
                   }}
-                >{formValue}</Typography>
+                >{formValue.value}</Typography>
               </Grid>
 
               {idx !== location.state.formValues.length - 1 
@@ -91,8 +90,8 @@ export default function ReservationSummary() {
         })
       : null
       }
-    
     </Paper>
+
     <Button
       variant="contained"
       component={Link}
@@ -102,22 +101,9 @@ export default function ReservationSummary() {
         height:"60px",
         fontSize:"20px"
       }}
-    >Takaisin etusivulle</Button>
+      >{t('returnHome')}
+    </Button>
+
   </Container>
-  <Box
-    sx={{
-      //backgroundImage: "url('/img/jarvi.jpg')",
-      //backgroundSize:"cover",
-      //backgroundPosition:"0px 300px",
-      //backgroundAttachment:"fixed",
-      background: "",
-      textAlign: "center",
-      margin:0,
-      height:100,
-    }}
-    >
-    <Typography variant="h1" component={"div"}></Typography>
-  </Box>
-  </>
   );
 }

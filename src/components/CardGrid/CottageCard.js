@@ -4,10 +4,12 @@ import StarRating from '../StarRating/StarRating';
 import { Link } from 'react-router-dom';
 import PhotoCarousel from '../PhotoCarousel/PhotoCarousel';
 import CottageInformationList from '../Cottage/CottageInformationList';
+import { useTranslation } from 'react-i18next';
 
 export default function CottageCard({cottageData, photosData, rating, countOfRatings}) {
 
   const cottage = cottageData;
+  const { t } = useTranslation();
 
   return (
     <Card 
@@ -56,7 +58,7 @@ export default function CottageCard({cottageData, photosData, rating, countOfRat
             behavior: 'smooth'
           });
         }}
-      >Tutustu ja varaa</Button>
+      >{t('reserveNow')}</Button>
     </Card>  
   );
 }

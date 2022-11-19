@@ -11,10 +11,12 @@ import { Checkbox, FormControlLabel, FormGroup, LinearProgress, Paper, TextField
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import ReservationDataService from './../../services/reservation.service';
 import CottageDataService from '../../services/cottage.service';
+import { useTranslation } from "react-i18next";
 
 export default function ReservationStepper() {
 
   const location = useLocation();
+  const { t } = useTranslation();
 
   // Current cottage
   const params = useParams();
@@ -310,8 +312,21 @@ export default function ReservationStepper() {
     if(cottage) {
 
     const formValues = [firstName, lastName, email, homeAddress, postalCode, postalDistrict];
-    setFormValues([`${cottage.id}, ${cottage.name}`, firstName, lastName, email, homeAddress, postalCode, postalDistrict, cleanUp ? "Kyllä" : "Ei", finalPrice]);
-    //const errors = [firstNameError, lastNameError, emailError, homeAddressError, postalCodeError, postalDistrictError];
+
+    setFormValues([
+      {name: t("cottageId"), value: cottage.id},
+      {name: t("cottageName"), value: cottage.cottageName}, 
+      {name: t("firstName"), value: firstName}, 
+      {name: t("lastName"), value: lastName}, 
+      {name: t("email"), value: email}, 
+      {name: t("homeAddress"), value: homeAddress}, 
+      {name: t("postalCode"), value: postalCode}, 
+      {name: t("postalDistrict"), value: postalDistrict}, 
+      {name: t("cleanUp"), value: cleanUp ? "Kyllä" : "Ei"},
+      {name: t("bookingDuration"), value: startDate.toLocaleDateString("fi-FI") + " - " + endDate.toLocaleDateString("fi-FI")},
+      {name: t("finalPrice"), value: finalPrice}
+    ]);
+    
     const setErrors = [setFirstNameError, setLastNameError, setEmailError, setHomeAddressError, setPostalCodeError, setPostalDistrictError];
 
     let calculateFinalPrice = () => {
@@ -480,6 +495,8 @@ export default function ReservationStepper() {
               to="/summary" 
               state={{
                 formValues: formValues,
+                primaryTitle: t('reservationSuccess'),
+                secondaryTitle: t('reservationData')
               }}
             />
           )}

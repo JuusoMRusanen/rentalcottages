@@ -3,5 +3,21 @@
   "home": "Home",
   "regions": "Regions",
   "cities": "Cities",
-  "addCottage": "Add Cottage"
+  "addCottage": "Add Cottage",
+  "cottageId": "Cottage Number",
+  "cottageName": "Cottage Name",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "email": "Email",
+  "homeAddress": "Home Address",
+  "postalCode": "Postal Code",
+  "postalDistrict": "Postal District",
+  "cleanUp": "Clean-up",
+  "bookingDuration": "Booking Duration",
+  "finalPrice": "Final Price",
+  "reservationSuccess": "Reservation booked!",
+  "reservationData": "Reservation form: ",
+  "returnHome": "Return Homepage",
+  "dateLocale": "en-US",
+  "reserveNow": "Details and Reservation"
 }

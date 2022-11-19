@@ -128,7 +128,7 @@ export default function Navbar() {
             onClick={ () => {
               changeLanguage('en')
             }} 
-            ><img src='/US-UK.svg'/>
+            ><img src='/US-UK.svg' alt="us-uk" />
           </Box>
 
           <Box 
@@ -140,7 +140,7 @@ export default function Navbar() {
             onClick={ () => {
               changeLanguage('fi')
             }} 
-            ><img src='/FI.svg'/>
+            ><img src='/FI.svg' alt="fi" />
           </Box>
 
         </>

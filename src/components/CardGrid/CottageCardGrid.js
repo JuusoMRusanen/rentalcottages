@@ -118,7 +118,19 @@ export default function CottageCardGrid({ getCityOrRegionName }) {
 
     }, 500);
     return () => clearTimeout(timer);
-    },[ pageCottages, currentPage, allCottages, allPhotos, loading, cottagesPerPage, allUserRatings, params.cityId, params.regionId, getCityOrRegionName ])
+    },
+    [ 
+      pageCottages, 
+      currentPage, 
+      allCottages, 
+      allPhotos, 
+      loading, 
+      cottagesPerPage, 
+      allUserRatings, 
+      params.cityId, 
+      params.regionId, 
+      getCityOrRegionName 
+    ])
 
   return (
     <>
