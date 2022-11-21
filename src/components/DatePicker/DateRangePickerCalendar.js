@@ -58,8 +58,14 @@ export default function DateRangePickerCalendarExample({
       ?
       <>
         <Grid item xs={12}>
-          <Typography variant='body1'>{t('startDate')+": "} {startDate ? format(startDate, t('dateFormat'), { locale: fi }) : 'none'}</Typography>
-          <Typography variant='body1'>{t('endDate')+": "} {endDate ? format(endDate, t('dateFormat'), { locale: fi }) : 'none'}</Typography>
+          <Typography 
+            variant='body1'
+            >{t('startDate')+": "} {startDate ? format(startDate, t('dateFormatDatePicker'), { locale: fi }) : 'none'}
+          </Typography>
+          <Typography 
+            variant='body1'
+            >{t('endDate')+": "} {endDate ? format(endDate, t('dateFormatDatePicker'), { locale: fi }) : 'none'}
+          </Typography>
         </Grid>
       </>
       : null

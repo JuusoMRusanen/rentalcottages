@@ -7,6 +7,7 @@ import DropDownMenu from "./DropDownMenu";
 import CityDataService from "../../services/city.service";
 import RegionDataService from "../../services/region.service";
 import AddIcon from '@mui/icons-material/Add';
+import TocIcon from '@mui/icons-material/Toc';
 import { useTranslation } from "react-i18next";
 
 export default function Navbar() {
@@ -116,6 +117,14 @@ export default function Navbar() {
             sx={{
             }}
             >{t('addCottage')} <AddIcon />
+          </Button>
+
+          <Button
+            href="/reservations"
+            color="inherit"
+            sx={{
+            }}
+            >{t('reservations')} <TocIcon />
           </Button>
             
           <Box 

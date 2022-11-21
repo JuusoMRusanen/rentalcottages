@@ -11,6 +11,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import CreateCottage from "./components/CreateCottage/CreateCottage";
 import CreateCottageSummary from "./components/CreateCottage/CreateCottageSummary";
+import Reservations from "./components/Reservations/Reservations";
 
 export default function RentalCottages() {
 
@@ -84,6 +85,7 @@ export default function RentalCottages() {
         <Route path={'/summary'} element={<ReservationSummary />} />
         <Route path={'/createcottage'} element={<CreateCottage />} />
         <Route path={'/createcottagesummary'} element={<CreateCottageSummary />} />
+        <Route path={'/reservations'} element={<Reservations />} />
       </Routes>
     </ThemeProvider>
     </div>
