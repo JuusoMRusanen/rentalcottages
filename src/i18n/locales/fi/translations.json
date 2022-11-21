@@ -62,5 +62,8 @@
   "reservations": "Varaukset",
   "reservation": "Varaus",
   "yes": "Kyllä",
-  "no": "Ei"
+  "no": "Ei",
+  "cottageReservation": "Kohteen varaaminen",
+  "cottageSubject": "Kohde",
+  "createCottage": "Lisää uusi mökki"
 }

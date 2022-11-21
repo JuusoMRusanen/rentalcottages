@@ -188,7 +188,7 @@ export default function CreateCottage(){
 
   return(
     <>
-    <JumboTitle titleText={"Lisää uusi mökki"} />
+    <JumboTitle titleText={t('createCottage')} />
 
     <Container maxWidth="xl"
       sx={{

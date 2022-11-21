@@ -62,5 +62,8 @@
   "reservations": "Reservations",
   "reservation": "Reservation",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "cottageReservation": "Cottage reservation",
+  "cottageSubject": "Cottage",
+  "createCottage": "Create Cottage"
 }

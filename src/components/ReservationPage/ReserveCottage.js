@@ -3,8 +3,11 @@ import ReservationStepper from './ReservationStepper';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import CottageDataService from '../../services/cottage.service';
+import { useTranslation } from 'react-i18next';
 
 export default function ReserveCottage() {
+
+  const { t } = useTranslation();
 
   // Current cottage
   const params = useParams();
@@ -58,8 +61,9 @@ export default function ReserveCottage() {
             sx={{
               mb:"10px",
             }}
-          >
-          Kohteen varaaminen</Typography>
+            >
+            {t('cottageReservation')}
+          </Typography>
           <Divider 
             sx={{
               mb:"10px",
@@ -71,7 +75,7 @@ export default function ReserveCottage() {
               mb:"40px",
             }}
             >
-            Kohde: {cottage ? cottage.id : null}, {cottage ? cottage.name : null}</Typography>
+            {t('cottageSubject')+": "} {cottage ? cottage.id : null}, {cottage ? cottage.cottageName : null}</Typography>
 
           <ReservationStepper />
           
