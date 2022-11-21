@@ -9,11 +9,13 @@ import Reviews from './Reviews';
 import CottageDataService from '../../services/cottage.service';
 import ReviewDataService from '../../services/review.service';
 import PhotoDataService from '../../services/photo.service';
+import { useTranslation } from 'react-i18next';
 
 export default function Cottage() {
 
   const params = useParams();
   const carouselParentRef = useRef([null]);
+  const { t } = useTranslation();
 
   // User ratings data
   const [rating, setRating] = useState(0);
@@ -203,7 +205,7 @@ export default function Cottage() {
               marginTop:5,
               marginBottom:5,
             }}
-            >Kohteen tiedot
+            >{t('cottageInformation')}
           </Typography>
         </Divider>
         
@@ -251,7 +253,7 @@ export default function Cottage() {
               marginTop:0,
               marginBottom:0,
             }}
-            >Varaaminen
+            >{t('booking')}
           </Typography>
         </Divider>
 
@@ -270,7 +272,7 @@ export default function Cottage() {
             startDate: startDate,
             endDate: endDate,
           }}
-          >Tee varaus</Button>
+          >{t('makeReservation')}</Button>
         </Paper>
       </Grid>
       

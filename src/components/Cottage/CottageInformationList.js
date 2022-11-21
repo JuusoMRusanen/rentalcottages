@@ -4,6 +4,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import BathtubIcon from '@mui/icons-material/Bathtub';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import { Avatar, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Tooltip } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 export default function CottageInformationList({
   cottageData, 
@@ -23,34 +24,35 @@ export default function CottageInformationList({
   primaryPadding,
   secondaryPadding
 }) {
+    const { t } = useTranslation();
 
     const cottage = cottageData;
 
     const items = [
       {
-        icon : <Tooltip title={`Sijainti`}><LocationIcon/></Tooltip>,
-        primary : "Sijainti:",
+        icon : <Tooltip title={t('location')}><LocationIcon/></Tooltip>,
+        primary : t('location')+":",
         secondary : `${cottage.cityName}, ${cottage.regionName}`
       },
       {
-        icon : <Tooltip title={`Majoitus`}><HotelIcon/></Tooltip>,
-        primary : "Majoitus:",
-        secondary : `${cottage.bedrooms} makuuhuonetta`
+        icon : <Tooltip title={t('accomodation')}><HotelIcon/></Tooltip>,
+        primary : t('accomodation')+":",
+        secondary : `${cottage.bedrooms} ${t('bedroomsPrul')}`
       },
       {
-        icon : <Tooltip title={`Tilavuus`}><HomeIcon/></Tooltip>,
-        primary : "Tilavuus:",
+        icon : <Tooltip title={t('space')}><HomeIcon/></Tooltip>,
+        primary : t('space')+":",
         secondary : `${cottage.size}m${"\u00B2"}`
       },
       {
-        icon : <Tooltip title={`Kylpyhuoneet`}><BathtubIcon/></Tooltip>,
-        primary : "Kylpyhuoneet:",
-        secondary : `${cottage.bathrooms} kylpyhuonetta`
+        icon : <Tooltip title={t('bathrooms')}><BathtubIcon/></Tooltip>,
+        primary : t('bathrooms')+":",
+        secondary : `${cottage.bathrooms} ${t('bathroomsPrul')}`
       },
       {
-        icon : <Tooltip title={`Hinta`}><CreditCardIcon/></Tooltip>,
-        primary : "Hinta:",
-        secondary : `${cottage.price}€ /vko`
+        icon : <Tooltip title={t('price')}><CreditCardIcon/></Tooltip>,
+        primary : t('price')+":",
+        secondary : `${cottage.price}€ ${t('perWeek')}`
       }
     ]
 

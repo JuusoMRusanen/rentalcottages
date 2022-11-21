@@ -1,11 +1,13 @@
 import { Typography, useMediaQuery } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function JumboTitle ({ titleText }) {
 
   const matches = useMediaQuery('(min-width:600px)');
   const [titleVariant, setTitleVariant] = useState("h2");
+  const { t } = useTranslation();
   
   useEffect(() => {
     if(matches) {
@@ -35,7 +37,7 @@ export default function JumboTitle ({ titleText }) {
           fontWeight:"bold",
         }}
         >
-        {titleText ? titleText : "Kaikki mökit."}
+        {titleText ? titleText : t('allCottages')}
       </Typography>
     </Box>
   )

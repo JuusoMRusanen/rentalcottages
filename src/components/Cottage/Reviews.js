@@ -1,8 +1,12 @@
 import { Box, Divider, Typography } from "@mui/material";
 import StarRating from "../StarRating/StarRating";
 import moment from 'moment';
+import { useTranslation } from "react-i18next";
 
 export default function Reviews({ userReviews }) {
+
+  const { t } = useTranslation();
+
   return(
     <>
     {userReviews
@@ -23,13 +27,13 @@ export default function Reviews({ userReviews }) {
             marginTop:5,
             marginBottom:5,
           }}
-          >Arvostelut
+          >{t('reviews')}
         </Typography>
       </Divider>
 
       {userReviews.map((userReview, index) => {
 
-        const date = moment(userReview.date).format('DD.MM.YYYY')
+        const date = moment(userReview.date).format(t('dateFormat'))
 
         return(
           <Box

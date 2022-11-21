@@ -1,12 +1,25 @@
 import React, { useState } from 'react'
 import { format } from 'date-fns'
-import { fi } from 'date-fns/locale'
+import { fi, enUS } from 'date-fns/locale'
 import { DateRangePickerCalendar, START_DATE, useDateInput } from 'react-nice-dates'
 import 'react-nice-dates/build/style.css'
 import { Grid, TextField, Typography, useTheme } from '@mui/material'
 import './styles.css'
+import { useTranslation } from 'react-i18next'
 
-export default function DateRangePickerCalendarExample({showSelectedDates, showInputs, maxWidth, mb, mt, startDate, endDate, setEndDate, setStartDate}) {
+export default function DateRangePickerCalendarExample({
+  showSelectedDates, 
+  showInputs, 
+  maxWidth, 
+  mb, 
+  mt, 
+  startDate, 
+  endDate, 
+  setEndDate, 
+  setStartDate
+}) {
+  
+  const { t } = useTranslation();
   
   const [focus, setFocus] = useState(START_DATE)
 
@@ -16,15 +29,15 @@ export default function DateRangePickerCalendarExample({showSelectedDates, showI
   
   const inputPropsStart = useDateInput({
     startDate,
-    format: 'dd.MM.yyyy',
-    locale: fi,
+    format: t('dateFormat'),
+    locale: t('dateLocale') === "fi-FI" ? fi : enUS,
     onDateChange: setStartDate
   })
 
   const inputPropsEnd = useDateInput({
     endDate,
-    format: 'dd.MM.yyyy',
-    locale: fi,
+    format: t('dateFormat'),
+    locale: t('dateLocale') === "fi-FI" ? fi : enUS,
     onDateChange: setEndDate
   })
 
@@ -45,8 +58,8 @@ export default function DateRangePickerCalendarExample({showSelectedDates, showI
       ?
       <>
         <Grid item xs={12}>
-          <Typography variant='body1'>Alkamispäivä: {startDate ? format(startDate, 'dd.MM.yyyy', { locale: fi }) : 'none'}</Typography>
-          <Typography variant='body1'>Loppumispäivä: {endDate ? format(endDate, 'dd.MM.yyyy', { locale: fi }) : 'none'}</Typography>
+          <Typography variant='body1'>{t('startDate')+": "} {startDate ? format(startDate, t('dateFormat'), { locale: fi }) : 'none'}</Typography>
+          <Typography variant='body1'>{t('endDate')+": "} {endDate ? format(endDate, t('dateFormat'), { locale: fi }) : 'none'}</Typography>
         </Grid>
       </>
       : null
@@ -73,7 +86,7 @@ export default function DateRangePickerCalendarExample({showSelectedDates, showI
           onStartDateChange={setStartDate}
           onEndDateChange={setEndDate}
           onFocusChange={handleFocusChange}
-          locale={fi}
+          locale={t('dateLocale') === "fi-FI" ? fi : enUS}
           touchDragEnabled={true}
           sx={{
               niceDatesNavigation:{

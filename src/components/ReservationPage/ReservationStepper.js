@@ -63,7 +63,7 @@ export default function ReservationStepper() {
 
   const steps = [
     { // FIRST STEP
-      label: 'Valitse aloitus- ja lopetuspäivä',
+      label: t('selectDates'),
       description: ``,
       component:
       <>
@@ -76,14 +76,14 @@ export default function ReservationStepper() {
         setStartDate={setStartDate}
         setEndDate={setEndDate}
         />
-      <Typography variant='h6' mb={"0px"}>Loppuhinta: {finalPrice}€</Typography>
-      <Typography variant='body1' mb={"20px"}>({cottage ? cottage.price : null}€ /vko)</Typography>
+      <Typography variant='h6' mb={"0px"}>{t('price')+": "} {finalPrice}€</Typography>
+      <Typography variant='body1' mb={"20px"}>({cottage ? cottage.price : null}€ {t('perWeek')})</Typography>
       </>
     },
     { // SECOND STEP
-      label: 'Täytä lomake',
+      label: t('fillForm'),
       description:
-        'Tähdellä merkityt kohdat ovat pakollisia',
+        t('fillFormDesc'),
       component:
       <>
         <Button
@@ -96,7 +96,7 @@ export default function ReservationStepper() {
             setPostalCode("131313");
             setPostalDistrict("Ankkalinna");
           }}
-        >Automaattinen täyttö</Button>
+        >{t('autoFill')}</Button>
 
         <br></br>
         <TextField
@@ -107,9 +107,9 @@ export default function ReservationStepper() {
           required
           error={firstNameError}
           variant='standard'
-          label="Etunimi"
-          id="firstName"
-          name="firstName"
+          label={t('firstName')}
+          id='firstName'
+          name='firstName'
           type="text"
           onChange={(e) => setFirstName(e.target.value)}
           value={firstName}
@@ -124,9 +124,9 @@ export default function ReservationStepper() {
           required
           error={lastNameError}
           variant='standard'
-          label="Sukunimi"
-          id="lastName"
-          name="lastName"
+          label={t('lastName')}
+          id='lastName'
+          name='lastName'
           type="text"
           onChange={(e) => setLastName(e.target.value)}
           value={lastName}
@@ -141,7 +141,7 @@ export default function ReservationStepper() {
           required
           error={emailError}
           variant='standard'
-          label="Sähköpostiosoite"
+          label={t('email')}
           id="email"
           name="email"
           type="email"
@@ -158,7 +158,7 @@ export default function ReservationStepper() {
           required
           error={homeAddressError}
           variant='standard'
-          label="Kotiosoite"
+          label={t('homeAddress')}
           id="homeAddress"
           name="homeAddress"
           type="text"
@@ -175,7 +175,7 @@ export default function ReservationStepper() {
           required
           error={postalCodeError}
           variant='standard'
-          label="Postinumero"
+          label={t('postalCode')}
           id="postalCode"
           name="postalCode"
           type="text"
@@ -192,7 +192,7 @@ export default function ReservationStepper() {
           required
           error={postalDistrictError}
           variant='standard'
-          label="Postitoimipaikka"
+          label={t('postalDistrict')}
           id="postalDistrict"
           name="postalDistrict"
           type="text"
@@ -209,7 +209,7 @@ export default function ReservationStepper() {
           >
           <FormControlLabel 
             control={<Checkbox />} 
-            label="Loppusiivous (100€)" 
+            label={t('cleanUp')+" (+100€)"}
             id="cleanUp"
             name="cleanUp"
             type="boolean"
@@ -217,12 +217,12 @@ export default function ReservationStepper() {
             value={cleanUp}
             />
         </FormGroup>
-        <Typography variant='h6' mb={"20px"}>Hinta: {finalPrice}€</Typography>
+        <Typography variant='h6' mb={"20px"}>{t('price')+": "} {finalPrice}€</Typography>
       </>
     },
     { // THIRD STEP
-      label: 'Viimeistely',
-      description: `Varmista, että tietosi ovat oikein.`,
+      label: t('wrappingUp'),
+      description: t('wrappingUpDesc'),
       component: 
       <>
         <FormGroup
@@ -233,7 +233,7 @@ export default function ReservationStepper() {
           >
           <FormControlLabel 
             control={<Checkbox />} 
-            label="Olen lukenut käyttöehdot" 
+            label={t('readTerms')}
             id="consent"
             name="consent"
             type="boolean"
@@ -241,7 +241,7 @@ export default function ReservationStepper() {
             value={consent}
             />
         </FormGroup>
-        <Typography variant='h6' mb={"0px"}>Loppuhinta: {finalPrice}€</Typography>
+        <Typography variant='h6' mb={"0px"}>{t('finalPrice')+": "} {finalPrice}€</Typography>
       </>
     },
   ];
@@ -323,7 +323,7 @@ export default function ReservationStepper() {
       {name: t("postalCode"), value: postalCode}, 
       {name: t("postalDistrict"), value: postalDistrict}, 
       {name: t("cleanUp"), value: cleanUp ? "Kyllä" : "Ei"},
-      {name: t("bookingDuration"), value: startDate.toLocaleDateString("fi-FI") + " - " + endDate.toLocaleDateString("fi-FI")},
+      {name: t("bookingDuration"), value: startDate.toLocaleDateString(t('dateLocale')) + " - " + endDate.toLocaleDateString(t('dateLocale'))},
       {name: t("finalPrice"), value: finalPrice}
     ]);
     
@@ -447,7 +447,7 @@ export default function ReservationStepper() {
             <StepLabel
               optional={
                 index === 2 ? (
-                  <Typography variant="caption">Viimeinen vaihe</Typography>
+                  <Typography variant="caption">{t('lastStep')}</Typography>
                 ) : null
               }
             >
@@ -470,14 +470,14 @@ export default function ReservationStepper() {
                     sx={{ mt: 1, mr: 1 }}
                     type={index === steps.length - 1 ? "submit" : "button"}
                   >
-                    {index === steps.length - 1 ? 'Varmista tilaus' : 'Jatka'}
+                    {index === steps.length - 1 ? t('confirmReservation') : t('continue')}
                   </Button>
                   <Button
                     disabled={index === 0}
                     onClick={handleBack}
                     sx={{ mt: 1, mr: 1 }}
                   >
-                    Takaisin
+                    {t('goBack')}
                   </Button>
                 </div>
               </Box>
@@ -487,7 +487,7 @@ export default function ReservationStepper() {
       </Stepper>
       {activeStep === steps.length && (
         <Paper square elevation={0} sx={{ p: 3 }}>
-          <Typography>Lähetetään lomaketta...</Typography>
+          <Typography>{t('sendingForm')}</Typography>
           <LinearProgress />
           {success && (
             <Navigate

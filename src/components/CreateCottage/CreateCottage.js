@@ -5,8 +5,11 @@ import CottageDataService from '../../services/cottage.service';
 import CityDataService from "../../services/city.service";
 import JumboTitle from "../JumboTitle/JumboTitle";
 import { Navigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function CreateCottage(){
+  
+  const { t } = useTranslation();
 
   // Form values
   const [cottageName, setCottageName] = useState("");
@@ -47,15 +50,16 @@ export default function CreateCottage(){
 
     setSending(true);
 
+    // Form values for summary
     setFormValues([
-      cottageName, 
-      cities[cityId] ? cities[cityId].name : null, 
-      bedrooms, 
-      bathrooms, 
-      price, 
-      size,
-      selectedFiles ? selectedFiles.length : 0,
-    ])
+      {name: t("cottageName"), value: cottageName},
+      {name: t("city"), value: cities[cityId] ? cities[cityId].name : null},
+      {name: t("bedrooms"), value: bedrooms}, 
+      {name: t("bathrooms"), value: bathrooms}, 
+      {name: t("price"), value: price}, 
+      {name: t("size"), value: size}, 
+      {name: t("photos"), value: selectedFiles ? selectedFiles.length : 0,}
+    ]);
 
     // construct form data for posting photos
     const formData = new FormData(e.currentTarget);
@@ -108,7 +112,15 @@ export default function CreateCottage(){
       selectedFiles ? selectedFiles.length : 0,
     ]
 
-    const setErrors = [setCottageNameError, setCityIdError, setBedroomsError, setBathroomsError, setPriceError, setSizeError, setSelectedFilesError];
+    const setErrors = [
+      setCottageNameError, 
+      setCityIdError, 
+      setBedroomsError, 
+      setBathroomsError, 
+      setPriceError, 
+      setSizeError, 
+      setSelectedFilesError
+    ];
 
     let correctValues = 0;
     
@@ -200,11 +212,11 @@ export default function CreateCottage(){
             setPrice(550)
             setSize(120)
           }}
-        >Automaattinen täyttö</Button>
+        >{t('autoFill')}</Button>
 
         <TextField
           id="cottageName"
-          label="Mökin nimi" 
+          label={t('cottageName')}
           type="text"
           required
           error={cottageNameError}
@@ -216,7 +228,7 @@ export default function CreateCottage(){
         <TextField
           select
           id="cityId"
-          label="Kaupunki" 
+          label={t('city')} 
           required
           error={cityIdError}
           value={cityId || ''}
@@ -238,9 +250,9 @@ export default function CreateCottage(){
           required
           error={bedroomsError}
           value={bedrooms || ''}
-          label="Makuuhuoneet"
+          label={t('bedrooms')}
           InputProps={{
-            startAdornment: <InputAdornment position="start">{"kpl"}</InputAdornment>,
+            startAdornment: <InputAdornment position="start">{t('count')}</InputAdornment>,
           }}
           sx={{ m:textFieldMargin }}
           onChange={(e) => setBedrooms(e.target.value)}
@@ -252,9 +264,9 @@ export default function CreateCottage(){
           required
           error={bathroomsError}
           value={bathrooms || ''}
-          label="Kylpyhuoneet"
+          label={t('bathrooms')} 
           InputProps={{
-            startAdornment: <InputAdornment position="start">{"kpl"}</InputAdornment>,
+            startAdornment: <InputAdornment position="start">{t('count')}</InputAdornment>,
           }}
           sx={{ m:textFieldMargin }}
           onChange={(e) => setBathrooms(e.target.value)}
@@ -262,7 +274,7 @@ export default function CreateCottage(){
 
         <TextField
           id="price"
-          label="Viikkohinta" 
+          label={t('weekPrice')} 
           type="number"
           required
           error={priceError}
@@ -280,7 +292,7 @@ export default function CreateCottage(){
           required
           error={sizeError}
           value={size || ''}
-          label="Pinta-ala"
+          label={t('weekPrice')} 
           InputProps={{
             startAdornment: <InputAdornment position="start">{`m${"\u00B2"}`}</InputAdornment>,
           }}
@@ -288,7 +300,7 @@ export default function CreateCottage(){
           onChange={(e) => setSize(e.target.value)}
           />
         
-        <Typography color={selectedFilesError ? "red" : ""} >Syötä kuvat mökistä (väh. 1, max. 6)</Typography>
+        <Typography color={selectedFilesError ? "red" : ""} > {t('inputPhotos')} </Typography>
         <input
           required
           multiple
@@ -303,21 +315,23 @@ export default function CreateCottage(){
           type="submit"
           disabled={disabled}
           sx={{ m:"20px 0 0 0" }}
-          >Tallenna
+          >{t('save')}
         </Button>
 
       </FormGroup>
     </form>
 
     {sending && (<Paper square elevation={0} sx={{ p: 3 }}>
-      <Typography>Lähetetään lomaketta...</Typography>
+      <Typography> {t('sendingForm')} </Typography>
       <LinearProgress />
       {success && (
         <Navigate
           replace 
-          to="/createcottagesummary" 
+          to="/summary" 
           state={{
             formValues: formValues,
+            primaryTitle: t('cottageCreateSuccess'),
+            secondaryTitle: t('cottageCreateInformation')
           }}
         />
       )}
