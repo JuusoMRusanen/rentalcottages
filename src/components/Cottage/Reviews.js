@@ -16,7 +16,7 @@ export default function Reviews({ userReviews }) {
       sx={{
         width:'100%',
         height:'auto',
-        p:'10px',
+        p:'0px',
         mb:'20px',
       }}
       >
@@ -41,14 +41,14 @@ export default function Reviews({ userReviews }) {
             sx={{
               width:'100%',
               height:'auto',
-              p:'10px',
+              p:'0px',
             }}
             >
           <Box
             sx={{
               width:'100%',
               height:'auto',
-              p:'10px',
+              p:'0px',
             }}
             >
             <StarRating rating={userReview.rating} disableTooltip={true} />

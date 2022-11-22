@@ -10,6 +10,8 @@ import CityDataService from '../../services/city.service';
 import RegionDataService from '../../services/region.service';
 import AddIcon from '@mui/icons-material/Add';
 import HomeIcon from '@mui/icons-material/Home';
+import TocIcon from '@mui/icons-material/Toc';
+import { useTranslation } from 'react-i18next';
 
 const Accordion = styled((props) => (
 
@@ -61,6 +63,7 @@ const BoxDivider = () => {
 
 export default function DrawerMenuAccordion({ toggleDrawer, baseURL }) {
 
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState('panel1');
 
   const handleChange = (panel, listItemId, isFilter) => (event, newExpanded) => {
@@ -156,7 +159,7 @@ export default function DrawerMenuAccordion({ toggleDrawer, baseURL }) {
           p:"5px",
         }}
         onClick={ toggleDrawer('left', false) }
-        >Etusivu
+        >{t('home')}
         <HomeIcon />
       </Button>
 
@@ -167,21 +170,33 @@ export default function DrawerMenuAccordion({ toggleDrawer, baseURL }) {
         href="/createcottage"
         sx={{
           width:"100%",
-          m: "0 0 0 40px",
           fontSize:"18px",
-          margin:0,
           p:"5px",
         }}
         onClick={ toggleDrawer('left', false) }
-        >Lisää mökki
+        >{t('addCottage')}
         <AddIcon />
+      </Button>
+
+      <BoxDivider />
+
+      <Button
+        variant="contained"
+        href="/reservations"
+        sx={{
+          width:"100%",
+          fontSize:"18px",
+          p:"5px",
+        }}
+        onClick={ toggleDrawer('left', false) }
+        >{t('reservations')} <TocIcon />
       </Button>
 
       <BoxDivider />
 
       <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          <Typography>Kaupungit</Typography>
+          <Typography> {t('cities')} </Typography>
         </AccordionSummary>
         <AccordionDetails>
           {cities ? <ButtonList listItems={cities} panelName={'panel1'} /> : null}
@@ -192,7 +207,7 @@ export default function DrawerMenuAccordion({ toggleDrawer, baseURL }) {
 
       <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
         <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-          <Typography>Alueet</Typography>
+          <Typography> {t('regions')} </Typography>
         </AccordionSummary>
         <AccordionDetails>
           {regions ? <ButtonList listItems={regions} panelName={'panel2'} /> : null}
