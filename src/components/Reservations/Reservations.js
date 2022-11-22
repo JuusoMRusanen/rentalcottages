@@ -1,8 +1,9 @@
-import { CircularProgress, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { CircularProgress, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReservationDataService from "../../services/reservation.service"
+import JumboTitle from "../JumboTitle/JumboTitle.js";
 
 export default function Reservations() {
 
@@ -23,15 +24,16 @@ export default function Reservations() {
   }, [])
   
   return(
+  <>
+  <JumboTitle titleText={t('reservations')} />
+
   <Container 
     maxWidth="xl"
     sx={{
       textAlign: "center",
-      mt:"90px"
+      mt:"10px"
     }}
     >
-    <Typography variant="h2" mb={"50px"}> {t('reservations')} </Typography>
-
     <TableContainer component={Paper}>
       <Table sx={{ width:"100%" }} aria-label="simple table">
         <TableHead>
@@ -86,5 +88,6 @@ export default function Reservations() {
     </TableContainer>
     
   </Container>
+  </>
   );
 }
