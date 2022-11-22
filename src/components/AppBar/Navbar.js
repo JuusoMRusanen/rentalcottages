@@ -9,21 +9,19 @@ import RegionDataService from "../../services/region.service";
 import AddIcon from '@mui/icons-material/Add';
 import TocIcon from '@mui/icons-material/Toc';
 import { useTranslation } from "react-i18next";
+import LanguageMenu from "./LanguageMenu";
 
 export default function Navbar() {
 
   const matches = useMediaQuery('(min-width:600px)');
   const [visibleOnMobile, setVisibleOnMobile] = useState(false);
   const { t } = useTranslation();
-  const { i18n } = useTranslation();
+  
 
   const [cities, setCities] = useState([]);
   const [regions, setRegions] = useState([]);
   const [baseURL] = useState("/");
 
-  function changeLanguage(countryCode) {
-    i18n.changeLanguage(countryCode);
-  }
   
   useEffect(() => {
 
@@ -83,7 +81,10 @@ export default function Navbar() {
             <Typography variant="h5" component="div">
               {t('appBarTitle')}
             </Typography>
+
           </Box>
+
+          <LanguageMenu />
         </>
         :
         <>
@@ -126,31 +127,8 @@ export default function Navbar() {
             }}
             >{t('reservations')} <TocIcon />
           </Button>
-            
-          <Box 
-            sx={{ 
-              height:"100%", 
-              width:"35px", 
-              cursor: "pointer",
-              m:"0 10px 0 10px",
-            }} 
-            onClick={ () => {
-              changeLanguage('en')
-            }} 
-            ><img src='/US-UK.svg' alt="us-uk" />
-          </Box>
 
-          <Box 
-            sx={{ 
-              height:"100%", 
-              width:"35px", 
-              cursor: "pointer" 
-            }} 
-            onClick={ () => {
-              changeLanguage('fi')
-            }} 
-            ><img src='/FI.svg' alt="fi" />
-          </Box>
+          <LanguageMenu showMenuText={true} />
 
         </>
         }
