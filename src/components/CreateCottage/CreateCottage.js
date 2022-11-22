@@ -192,7 +192,7 @@ export default function CreateCottage(){
 
     <Container maxWidth="xl"
       sx={{
-        marginTop:"100px",
+        mt:"10px",
         mb:"200px",
         alignContent:"center",
       }}
