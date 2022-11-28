@@ -6,12 +6,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import getBaseURL from '../../getBaseURL';
 
 export default function PhotoCarousel({ photos, height, cardSized, bottomCarousel }) {
-
-  
-/* 
-  photos.forEach(photo => {
-    console.log(photo.cottageId);  
-  }); */
   
   const [photoIndex, setPhotoIndex] = useState(0);
   
