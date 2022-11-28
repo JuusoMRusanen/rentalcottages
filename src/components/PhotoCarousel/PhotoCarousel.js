@@ -6,6 +6,12 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import getBaseURL from '../../getBaseURL';
 
 export default function PhotoCarousel({ photos, height, cardSized, bottomCarousel }) {
+
+  
+/* 
+  photos.forEach(photo => {
+    console.log(photo.cottageId);  
+  }); */
   
   const [photoIndex, setPhotoIndex] = useState(0);
   
@@ -185,7 +191,7 @@ export default function PhotoCarousel({ photos, height, cardSized, bottomCarouse
                 ref={x => photoRef.current[idx] = x}
                 key={idx}
                 sx={{ 
-                  backgroundImage:`url(${getBaseURL()}${photo.src})`, // FETCH FROM SERVER ???
+                  backgroundImage:`url(${getBaseURL()}${photo.src})`,
                   backgroundRepeat:"no-repeat",
                   backgroundSize:"cover",
                   width: "100%",
