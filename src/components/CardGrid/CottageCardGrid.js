@@ -19,118 +19,73 @@ export default function CottageCardGrid({ getCityOrRegionName }) {
   const [allUserRatings, setAllUserRatings] = useState([]);
   const [allCottages, setAllCottages] = useState([]);
   const [allPhotos, setAllPhotos] = useState([]);
-  const [pageCottages, setPageCottages] = useState([]);
+  const [startRow, setStartRow] = useState(0);
+  const [endRow, setEndRow] = useState(20);
 
   // Parameter function for pagination component
   const paginate = (currentPage) => {
+
     setLoading(true) // Page is changing, need to get a new page of cottages
     setCurrentPage(currentPage); // Update page number
+
+    // Get index of first and last cottage
+    setEndRow(currentPage * cottagesPerPage);
+    setStartRow(currentPage * cottagesPerPage - cottagesPerPage);
+
+    // Set timeout before rendering cottage cards, so paginating feels smoother
+    const timer = setTimeout( () => {
+      setLoading(false)
+    }, 100);
+    return () => clearTimeout(timer);
   };
 
   useEffect(() => {
-
-    const timer = setTimeout(() => {
-
-      // Calculate index of first and last cottage
-      const endRow = currentPage * cottagesPerPage;
-      const startRow = endRow - cottagesPerPage;
-
+    
+    const getData = async () => {
       // Get all reviews
-      const getAllUserRatings = async () => {
-        ReviewDataService.getAll()
-        .then(response => {
-          setAllUserRatings(response.data);
-        })
-      }
+      await ReviewDataService.getAll()
+      .then(response => {
+        setAllUserRatings(response.data);
+      })
 
       // Get all Photos
-      const getAllPhotos = async () => {
-        PhotoDataService.getAll()
-        .then(response => {
-          setAllPhotos(response.data);
-        })
-      }
-
-      // Get all cottages
-      const getAllCottages = async () => {
-        CottageDataService.getAll()
-        .then(response => {
-          setAllCottages(response.data);
-        })
-      }
-
-      // Get all cottages by regionId
-      const getAllCottagesByRegionId = async (id) => {
-        CottageDataService.getAllByRegionId(id)
-        .then(response => {
-          setAllCottages(response.data);
-        })
-      }
-
-      // Get all cottages by cityId
-      const getAllCottagesByCityId = async (id) => {
-        CottageDataService.getAllByCityId(id)
-        .then(response => {
-          setAllCottages(response.data);
-        })
-      }
-        
-      // If cottages haven't been fetched yet
-      if (params.cityId && allCottages.length === 0) {
-        getAllCottagesByCityId(params.cityId);
-      }
-      if (params.regionId && allCottages.length === 0) {
-        getAllCottagesByRegionId(params.regionId)
-      }
-      if (!params.cityId && !params.regionId && allCottages.length === 0) {
-        getAllCottages();
-      }
+      await PhotoDataService.getAll()
+      .then(response => {
+        setAllPhotos(response.data);
+      })
       
-
-      // If user ratings haven't been fetched yet
-      if (allUserRatings.length === 0) {
-        getAllUserRatings();
-      }
-
-      // If page hasn't loaded yet and all cottages have been fetched
-      if (allCottages.length > 0 && allUserRatings.length > 0 && loading) {
-
-        // Get city or region name for page title
-        if (params.cityId) {
-          getCityOrRegionName(allCottages[0].cityName)
+      if (params.regionId) 
+        {
+          // Get all cottages by regionId
+          await CottageDataService.getAllByRegionId(params.regionId)
+          .then(response => {
+            setAllCottages(response.data);
+            getCityOrRegionName(response.data[0].regionName)
+          }) }
+      
+      if (params.cityId) 
+        {
+          // Get all cottages by cityId
+          await CottageDataService.getAllByCityId(params.cityId)
+          .then(response => {
+            setAllCottages(response.data);
+            getCityOrRegionName(response.data[0].cityName)
+          }) 
         }
-        if (params.regionId) {
-          getCityOrRegionName(allCottages[0].regionName)
+
+      if (!params.cityId && !params.regionId)
+        {
+          // Get all cottages
+          await CottageDataService.getAll()
+          .then(response => {
+            setAllCottages(response.data);
+          })
         }
-        
-        let slicedCottages = allCottages.slice(startRow, endRow); // Slice all cottages to a page of cottages
+    }
 
-        setPageCottages(slicedCottages) // Set page of cottages
-
-        if (allPhotos.length <= 0) {
-          getAllPhotos()
-        }
-      }
-
-      if (allPhotos.length > 0 && pageCottages.length > 0) {
-        setLoading(false)
-      } 
-
-    }, 500);
-    return () => clearTimeout(timer);
-    },
-    [ 
-      pageCottages, 
-      currentPage, 
-      allCottages, 
-      allPhotos, 
-      loading, 
-      cottagesPerPage, 
-      allUserRatings, 
-      params.cityId, 
-      params.regionId, 
-      getCityOrRegionName 
-    ])
+    getData().then(()=>setLoading(false))
+  
+    },[params])
 
   return (
     <>
@@ -145,7 +100,7 @@ export default function CottageCardGrid({ getCityOrRegionName }) {
     : <CircularProgress />
     }
 
-    {!loading
+    {allCottages.length > 0 && !loading
     ?
     <>
     <Box 
@@ -157,9 +112,9 @@ export default function CottageCardGrid({ getCityOrRegionName }) {
       }}
       >
       <Grid container spacing={1}>
-        {pageCottages.map((cottage, idx) => {
+        {allCottages.slice(startRow, endRow).map((cottage, idx) => {
 
-          let photosArray = [];
+          let cottagePhotos = [];
           let sumOfRatings = 0;
           let countOfRatings = 0;
           let rating = 0;
@@ -167,7 +122,7 @@ export default function CottageCardGrid({ getCityOrRegionName }) {
           allPhotos.forEach( photo => {
             if ( photo.cottageId === cottage.cottageId ) {
               //console.log("yeppee");
-              photosArray.push(photo);
+              cottagePhotos.push(photo);
             }
           });
 
@@ -183,8 +138,8 @@ export default function CottageCardGrid({ getCityOrRegionName }) {
           return (
             <Grid item xl={3} md={4} sm={6} xs={12} 
               key={idx}
-              >
-              <CottageCard rating={rating} cottageData={cottage} photosData={photosArray} countOfRatings={countOfRatings} />
+              >{console.log(cottagePhotos)}
+              <CottageCard rating={rating} cottageData={cottage} photosData={cottagePhotos} countOfRatings={countOfRatings} />
             </Grid>
           );
         })}
