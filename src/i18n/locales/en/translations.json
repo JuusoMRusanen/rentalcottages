@@ -66,5 +66,6 @@
   "cottageReservation": "Cottage reservation",
   "cottageSubject": "Cottage",
   "createCottage": "Create Cottage",
-  "language": "Language"
+  "language": "Language",
+  "connectionAlert": "Can't connect to the server! It probably hasn't woken up from sleep yet. Attempting to reconnect..."
 }

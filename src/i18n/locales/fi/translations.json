@@ -66,5 +66,6 @@
   "cottageReservation": "Kohteen varaaminen",
   "cottageSubject": "Kohde",
   "createCottage": "Lisää uusi mökki",
-  "language": "Kieli"
+  "language": "Kieli",
+  "connectionAlert": "Ei yhteyttä palvelimeen! Se on todennäköisesti nukahtanut käytön puutteesta. Yritetään uudestaan..."
 }
