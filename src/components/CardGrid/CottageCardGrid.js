@@ -6,12 +6,14 @@ import { useParams } from 'react-router-dom';
 import CottageDataService from '../../services/cottage.service';
 import ReviewDataService from '../../services/review.service';
 import PhotoDataService from '../../services/photo.service';
+import ConnectionAlert from '../ConnectionAlert/ConnectionAlert';
 
 export default function CottageCardGrid({ getCityOrRegionName }) {
 
   const params = useParams();
 
   const [loading, setLoading] = useState(true);
+  const [badRequest, setBadRequest] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [cottagesPerPage] = useState(20);
@@ -42,11 +44,18 @@ export default function CottageCardGrid({ getCityOrRegionName }) {
   useEffect(() => {
     
     const getData = async () => {
+      
       // Get all reviews
       await ReviewDataService.getAll()
       .then(response => {
-        setAllUserRatings(response.data);
-      })
+        setAllUserRatings(response.data)
+      }).catch((error) => {
+        setBadRequest(true);
+        const timer = setTimeout( () => {
+          window.location.reload();
+        }, 10000);
+        return () => clearTimeout(timer);
+      });
 
       // Get all Photos
       await PhotoDataService.getAll()
@@ -83,12 +92,14 @@ export default function CottageCardGrid({ getCityOrRegionName }) {
         }
     }
 
-    getData().then(()=>setLoading(false))
+    getData().then(() => setLoading(false))
   
-    },[params])
+    },[params, badRequest])
 
   return (
     <>
+    {badRequest ? <ConnectionAlert /> : null }
+
     {allCottages
     ?
     <CottagesPagination 
@@ -121,7 +132,6 @@ export default function CottageCardGrid({ getCityOrRegionName }) {
 
           allPhotos.forEach( photo => {
             if ( photo.cottageId === cottage.cottageId ) {
-              //console.log("yeppee");
               cottagePhotos.push(photo);
             }
           });
@@ -138,7 +148,7 @@ export default function CottageCardGrid({ getCityOrRegionName }) {
           return (
             <Grid item xl={3} md={4} sm={6} xs={12} 
               key={idx}
-              >{console.log(cottagePhotos)}
+              >
               <CottageCard rating={rating} cottageData={cottage} photosData={cottagePhotos} countOfRatings={countOfRatings} />
             </Grid>
           );
