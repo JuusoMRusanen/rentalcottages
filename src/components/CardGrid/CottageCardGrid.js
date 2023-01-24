@@ -53,7 +53,7 @@ export default function CottageCardGrid({ getCityOrRegionName }) {
         setBadRequest(true);
         const timer = setTimeout( () => {
           window.location.reload();
-        }, 10000);
+        }, 30000);
         return () => clearTimeout(timer);
       });
 
